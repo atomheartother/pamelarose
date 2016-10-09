@@ -30,3 +30,11 @@ pam_handle_t *pamh;
 int flags;
 int argc;
 const char **argv;
+
+===
+
+Create a randomized 512MB file:
+dd if=/dev/urandom of=/home/[user]/[path] bs=1M count=512
+
+Make a LUKS container out of a file:
+cryptsetup -y luksFormat [path]
