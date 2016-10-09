@@ -5,7 +5,7 @@
 ## Login   <navenn_t@epitech.net>
 ## 
 ## Started on  Sun Oct  9 18:28:59 2016 Thomas Navennec
-## Last update Sun Oct  9 19:27:22 2016 Thomas Navennec
+## Last update Sun Oct  9 19:28:00 2016 Thomas Navennec
 ##
 
 NAME = pam_elarose.so
@@ -28,6 +28,7 @@ RM = rm -rf
 
 all: $(NAME64) $(NAME32)
 
+# Do not do this outside the VM!
 install: $(NAME64) $(NAME32)
 	cp $(NAME64) /usr/lib64/security/$(NAME)
 	cp $(NAME32) /usr/lib/security/$(NAME)
