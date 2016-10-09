@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Sun Oct  9 18:25:25 2016 Thomas Navennec
-** Last update Sun Oct  9 19:30:08 2016 Thomas Navennec
+** Last update Sun Oct  9 19:40:14 2016 Thomas Navennec
 */
 
 /*
@@ -18,10 +18,10 @@
 /*
 ** Called when user opens his session
 */
-PAM_EXTERN int pam_sm_open_session(pam_handle_t *pamh,
-				   int flags,
-				   int argc,
-				   const char **argv)
+int pam_sm_open_session(pam_handle_t *pamh,
+			int flags,
+			int argc,
+			const char **argv)
 {
   return (PAM_SUCCESS);
 }
@@ -29,10 +29,10 @@ PAM_EXTERN int pam_sm_open_session(pam_handle_t *pamh,
 /*
 ** Called when user closes his session
 */
-PAM_EXTERN int pam_sm_close_session(pam_handle_t *pamh,
-				    int flags,
-				    int argc,
-				    const char **argv)
+int pam_sm_close_session(pam_handle_t *pamh,
+			 int flags,
+			 int argc,
+			 const char **argv)
 {
   return (PAM_SUCCESS);
 }
