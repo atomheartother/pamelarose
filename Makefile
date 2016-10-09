@@ -5,14 +5,14 @@
 ## Login   <navenn_t@epitech.net>
 ## 
 ## Started on  Sun Oct  9 18:28:59 2016 Thomas Navennec
-## Last update Sun Oct  9 18:38:25 2016 Thomas Navennec
+## Last update Sun Oct  9 18:48:06 2016 Thomas Navennec
 ##
 
 NAME = pam_elarose.so
 
 CC = gcc
 
-CFLAGS += -fPIC
+CFLAGS += -fPIC -I./includes/
 
 SRCDIR = ./src/
 OBJDIR = ./obj/
