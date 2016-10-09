@@ -1,0 +1,39 @@
+#include <security/pam_modules.h>
+
+gcc -fPIC -c pam_module.c
+gcc -shared -o pam_module.so pam_module.o -lpam
+
+===
+
+Modules directory: /usr/lib/security/
+Conf files: /etc/pam.d/
+
+====
+
+#define PAM_SM_SESSION
+
+#include <security/pam_modules.h>
+
+PAM_EXTERN int pam_sm_open_session(	pamh, 	 
+ 	flags, 	 
+ 	argc, 	 
+ 	argv);	 
+pam_handle_t *pamh;
+int flags;
+int argc;
+const char **argv;
+
+===
+
+#define PAM_SM_SESSION
+
+#include <security/pam_modules.h>
+
+PAM_EXTERN int pam_sm_close_session(	pamh, 	 
+ 	flags, 	 
+ 	argc, 	 
+ 	argv);	 
+pam_handle_t *pamh;
+int flags;
+int argc;
+const char **argv;
