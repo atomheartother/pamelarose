@@ -5,7 +5,7 @@
 ## Login   <navenn_t@epitech.net>
 ## 
 ## Started on  Sun Oct  9 18:28:59 2016 Thomas Navennec
-## Last update Sun Oct  9 19:28:00 2016 Thomas Navennec
+## Last update Sun Oct  9 19:37:40 2016 Thomas Navennec
 ##
 
 NAME = pam_elarose.so
@@ -21,8 +21,8 @@ OBJDIR = ./obj/
 
 SRC = $(SRCDIR)pam_elarose.c
 
-OBJ64	= $(patsubst $(SRCDIR)%.c,$(OBJDIR)64%.o,$(SRC))
-OBJ32	= $(patsubst $(SRCDIR)%.c,$(OBJDIR)32%.o,$(SRC))
+OBJ64	= $(patsubst $(SRCDIR)%.c,$(OBJDIR)%64.o,$(SRC))
+OBJ32	= $(patsubst $(SRCDIR)%.c,$(OBJDIR)%32.o,$(SRC))
 
 RM = rm -rf
 
@@ -34,10 +34,10 @@ install: $(NAME64) $(NAME32)
 	cp $(NAME32) /usr/lib/security/$(NAME)
 
 $(NAME64): $(OBJ64)
-	$(CC) -shared -o $@ $(OBJ) -lpam
+	$(CC) -shared -o $@ -m64 $(OBJ64) -lpam
 
 $(NAME32): $(OBJ32)
-	$(CC) -shared -o $@ $(OBJ) -lpam
+	$(CC) -shared -o $@ -m32 $(OBJ32) -lpam
 
 $(OBJ32): | $(OBJDIR)
 $(OBJ64): | $(OBJDIR)

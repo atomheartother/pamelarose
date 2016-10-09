@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Sun Oct  9 18:25:25 2016 Thomas Navennec
-** Last update Sun Oct  9 18:46:46 2016 Thomas Navennec
+** Last update Sun Oct  9 19:30:08 2016 Thomas Navennec
 */
 
 /*
@@ -15,6 +15,9 @@
 
 #include <security/pam_modules.h>
 
+/*
+** Called when user opens his session
+*/
 PAM_EXTERN int pam_sm_open_session(pam_handle_t *pamh,
 				   int flags,
 				   int argc,
@@ -23,6 +26,9 @@ PAM_EXTERN int pam_sm_open_session(pam_handle_t *pamh,
   return (PAM_SUCCESS);
 }
 
+/*
+** Called when user closes his session
+*/
 PAM_EXTERN int pam_sm_close_session(pam_handle_t *pamh,
 				    int flags,
 				    int argc,
