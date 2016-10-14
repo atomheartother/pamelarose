@@ -5,24 +5,57 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Sun Oct  9 18:25:25 2016 Thomas Navennec
-** Last update Sun Oct  9 19:40:14 2016 Thomas Navennec
+** Last update Fri Oct 14 17:46:16 2016 Thomas Navennec
 */
 
 /*
 ** Tell PAM that we're managing a session
 */
+
 #define PAM_SM_SESSION
 
-#include <security/pam_modules.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <errno.h>
+#include "utils.h"
+#include "new_pam_container.h"
 
 /*
 ** Called when user opens his session
 */
-int pam_sm_open_session(pam_handle_t *pamh,
-			int flags,
-			int argc,
-			const char **argv)
+int	pam_sm_open_session(pam_handle_t *pamh,
+			    int flags,
+			    __attribute__((unused))int argc,
+			    __attribute__((unused))const char **argv)
 {
+  char	*path;
+  struct stat buf;
+  int	res;
+
+  if (!(path = get_crypt_path(pamh, flags)))
+    return PAM_SESSION_ERR;
+  res = stat(path, &buf);
+  if (res == -1)
+    {
+      if (errno == ENOENT)
+	{
+	  if (new_pam_container(pamh, path, flags) == -1) /* No container was created */
+	    {
+	      free(path);
+	      return (PAM_SUCCESS);
+	    }
+	}
+      else
+	{
+	  err_msg(ERR_STAT, flags);
+	  free(path);
+	  return PAM_SESSION_ERR;
+	}
+    }
+  /* access_container(pamh, path, flags); */
+  free(path);
   return (PAM_SUCCESS);
 }
 
@@ -31,9 +64,23 @@ int pam_sm_open_session(pam_handle_t *pamh,
 */
 int pam_sm_close_session(pam_handle_t *pamh,
 			 int flags,
-			 int argc,
-			 const char **argv)
+			 __attribute__((unused))int argc,
+			 __attribute__((unused))const char **argv)
 {
+  char	*path;
+  struct stat buf;
+  int	res;
+
+  if (!(path = get_crypt_path(pamh, flags)))
+    return PAM_SESSION_ERR;
+  res = stat(path, &buf);
+  if (res == -1)
+    {
+      free(path);
+      return PAM_SESSION_ERR;
+    }
+  /* close_container(pamh, path, flags); */
+  free(path);
   return (PAM_SUCCESS);
 }
 

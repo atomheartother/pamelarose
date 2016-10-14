@@ -5,7 +5,7 @@
 ## Login   <navenn_t@epitech.net>
 ## 
 ## Started on  Sun Oct  9 18:28:59 2016 Thomas Navennec
-## Last update Sun Oct  9 19:37:40 2016 Thomas Navennec
+## Last update Fri Oct 14 18:17:03 2016 Thomas Navennec
 ##
 
 NAME = pam_elarose.so
@@ -15,11 +15,15 @@ NAME32 = pam_elarose32.so
 CC = gcc
 
 CFLAGS += -fPIC -I./includes/
+CFLAGS += -Wall -Wextra
 
 SRCDIR = ./src/
 OBJDIR = ./obj/
 
-SRC = $(SRCDIR)pam_elarose.c
+SRC =	$(SRCDIR)pam_elarose.c		\
+	$(SRCDIR)utils.c		\
+	$(SRCDIR)new_path_container.c	\
+	$(SRCDIR)get_next_line.c
 
 OBJ64	= $(patsubst $(SRCDIR)%.c,$(OBJDIR)%64.o,$(SRC))
 OBJ32	= $(patsubst $(SRCDIR)%.c,$(OBJDIR)%32.o,$(SRC))
