@@ -23,7 +23,7 @@ CFLAGS += -Wall -Wextra
 
 SRCDIR = ./src/
 OBJDIR = ./obj/
-DESTDIR = /usr/lib$(ARCH)/security
+DESTDIR = /lib/x86_64-linux-gnu/security/
 
 SRC =	$(SRCDIR)pam_elarose.c		\
 	$(SRCDIR)utils.c		\
