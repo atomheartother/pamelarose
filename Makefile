@@ -5,7 +5,7 @@
 ## Login   <navenn_t@epitech.net>
 ## 
 ## Started on  Sun Oct  9 18:28:59 2016 Thomas Navennec
-## Last update Sat Oct 15 03:31:29 2016 Thomas Navennec
+## Last update Sat Oct 15 13:31:22 2016 Thomas Navennec
 ##
 
 ARCH := $(shell getconf LONG_BIT)
@@ -37,6 +37,7 @@ RM = rm -rf
 all: $(NAME)
 
 # Do not do this outside the VM!
+# Installs the binary in the right directory FOR DEBIAN ONLY!
 install: all
 	@test -d $(DESTDIR) || mkdir -p $(DESTDIR) && cp $(NAME) $(DESTDIR)
 

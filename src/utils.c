@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Fri Oct 14 15:24:56 2016 Thomas Navennec
-** Last update Sat Oct 15 03:40:24 2016 Thomas Navennec
+** Last update Sat Oct 15 13:33:14 2016 Thomas Navennec
 */
 
 #include <stdlib.h>
@@ -21,7 +21,7 @@ void	err_msg(const char * const msg, const int flags)
 {
   if (flags == PAM_SILENT)
     return ;
-  printf("Errror: %s\n", msg);
+  fprintf(stderr, "Errror: %s\n", msg);
 }
 
 /*
