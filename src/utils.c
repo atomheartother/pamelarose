@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Fri Oct 14 15:24:56 2016 Thomas Navennec
-** Last update Fri Oct 14 17:08:01 2016 Thomas Navennec
+** Last update Sat Oct 15 03:40:24 2016 Thomas Navennec
 */
 
 #include <stdlib.h>
@@ -13,6 +13,7 @@
 #include "utils.h"
 
 #include <stdio.h>
+
 /*
 ** Generic error msg function
 */
@@ -33,9 +34,11 @@ char	*get_crypt_path(pam_handle_t *pamh, const int flags)
   char		*path;
   int		res;
 
-  res = pam_get_user(pamh, &usrname, NULL);
+  res = pam_get_user(pamh, &usrname, "zob:");
   if (res == PAM_SYSTEM_ERR || PAM_CONV_ERR)
     {
+      if (res == PAM_SYSTEM_ERR)
+	printf("System error\n");
       err_msg(ERR_UNAME, flags);
       return NULL;
     }
