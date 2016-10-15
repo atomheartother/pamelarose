@@ -8,9 +8,12 @@
 ** Last update Fri Oct 14 18:48:08 2016 Thomas Navennec
 */
 
-#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include <stdio.h>
+#include <unistd.h>
 #include <string.h>
+#include <strings.h>
 #include <stdlib.h>
 #include "new_pam_container.h"
 #include "utils.h"
@@ -41,11 +44,16 @@ char	*concat_and_alloc(const char * const s1, const char * const s2)
   return res;
 }
 
+void	putstring(const char * const s)
+{
+  write(STDOUT_FILENO, s, strlen(s));
+}
+
 /*
 ** Returns 0 if everything went well
 */
-int	create_file(const char * const path,
-		    const char * const size,
+int	create_file(char * path,
+		    char *size,
 		    int flags)
 {
   char	*args[6];
@@ -68,7 +76,13 @@ int	create_file(const char * const path,
       i++;
     }
   if (!err)
-    execv("/usr/bin/dd", args);
+    {
+    if (execv("/bin/dd", args) == -1)
+      {
+      	err = -2;
+	err_msg(ERR_EXECV, flags);
+      }
+    }
   i = 0;
   while (i < 5)
     {
@@ -76,6 +90,8 @@ int	create_file(const char * const path,
 	free(args[i]);
       i++;
     }
+  free(path);
+  free(size);
   return err;
 }
 
@@ -84,18 +100,19 @@ int	create_file(const char * const path,
 ** 0 otherwise
 */
 int	new_pam_container(pam_handle_t *pamh,
-			    const char * const path,
+			    char * path,
 			    int flags)
 {
-  printf("%s\n%s", NEWPAM_WELCOME, NEWPAM_PROMPT);
-  int	c = getchar();
-  if (c == EOF || c == 'n' || c == 'N')
+  char *line;
+  putstring(NEWPAM_WELCOME);
+  putstring(NEWPAM_PROMPT);
+  line = get_next_line(STDIN_FILENO);
+  if (!line || !strncasecmp("no", line, strlen(line)))
     return -1;
   int	loop = NEWPAM_MAX_TRIES;
-  char	*line = NULL;
   while (loop > 0)
     {
-      printf(NEWPAM_SIZE);
+      putstring(NEWPAM_SIZE);
       line = get_next_line(STDIN_FILENO);
       if (!line)
 	return -1;
@@ -108,8 +125,16 @@ int	new_pam_container(pam_handle_t *pamh,
 	  loop--;
 	}
     }
-  int	err = create_file(path, line, flags);
+  pid_t pid;
+  int err;
+  pid = fork();
+  if (!pid)
+     {
+  	err = create_file(path, line, flags);
+	exit(err);
+     }
   free(line);
+  waitpid(pid, &err, 0);
   if (!err)
     printf("%s %s\n", NEWPAM_DONE, path);
   return err;

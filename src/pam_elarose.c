@@ -44,7 +44,7 @@ int	pam_sm_open_session(pam_handle_t *pamh,
 	  if (new_pam_container(pamh, path, flags) == -1) /* No container was created */
 	    {
 	      free(path);
-	      return (PAM_SUCCESS);
+	      return (PAM_SESSION_ERR);
 	    }
 	}
       else

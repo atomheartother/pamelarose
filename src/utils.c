@@ -11,7 +11,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "utils.h"
-
+#include <limits.h>
+#include <unistd.h>
 #include <stdio.h>
 
 /*
@@ -30,15 +31,13 @@ void	err_msg(const char * const msg, const int flags)
 */
 char	*get_crypt_path(pam_handle_t *pamh, const int flags)
 {
-  const char	*usrname;
+  char	usrname[LOGIN_NAME_MAX + 1];
   char		*path;
   int		res;
 
-  res = pam_get_user(pamh, &usrname, "zob:");
-  if (res == PAM_SYSTEM_ERR || PAM_CONV_ERR)
+  res = getlogin_r(usrname, LOGIN_NAME_MAX + 1);
+  if (res)
     {
-      if (res == PAM_SYSTEM_ERR)
-	printf("System error\n");
       err_msg(ERR_UNAME, flags);
       return NULL;
     }

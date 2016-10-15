@@ -20,6 +20,7 @@
 # define ERR_MALLOC	"Malloc failed"
 # define ERR_UNAME	"Could not get username"
 # define ERR_STAT	"stat failed on device"
+# define ERR_EXECV	"Could not execute command"
 
 char	*get_crypt_path(pam_handle_t *pamh, const int flags);
 void	err_msg(const char * const msg, const int flags);
