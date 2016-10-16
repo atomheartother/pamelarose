@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Fri Oct 14 17:03:26 2016 Thomas Navennec
-** Last update Fri Oct 14 18:15:07 2016 Thomas Navennec
+** Last update Sun Oct 16 15:38:44 2016 Thomas Navennec
 */
 
 #ifndef NEW_PAM_CONTAINER
@@ -19,10 +19,22 @@
 # define NEWPAM_ERR	"Invalid input, expected digits."
 # define NEWPAM_DONE	"Container created:"
 
+# define DD_EXE		"/bin/dd"
+# define DD_ARG0	"dd"
+# define DD_ARG1	"if=/dev/urandom"
+# define DD_ARG2	"of="
+# define DD_ARG3	"bs=1M"
+# define DD_ARG4	"count="
+
+# define CR_EXE		"/bin/cryptsetup"
+# define CR_ARG0	"cryptsetup"
+# define CR_ARG1	"-y"
+# define CR_ARG2	"luksFormat"
+
 /*
-** Making this <= 0 will break things.
+** Tries the user gets to enter the size of his container
 */
-# define NEWPAM_MAX_TRIES	30
+# define NEWPAM_MAX_TRIES	20
 
 int	new_pam_container(pam_handle_t *pamh,
 			  char * path,

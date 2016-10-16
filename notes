@@ -38,3 +38,7 @@ dd if=/dev/urandom of=/home/[user]/[path] bs=1M count=512
 
 Make a LUKS container out of a file:
 cryptsetup -y luksFormat [path]
+
+Returns:
+0: Success
+1: Failure
