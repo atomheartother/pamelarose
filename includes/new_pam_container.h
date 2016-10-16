@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Fri Oct 14 17:03:26 2016 Thomas Navennec
-** Last update Sun Oct 16 15:38:44 2016 Thomas Navennec
+** Last update Sun Oct 16 16:01:48 2016 Thomas Navennec
 */
 
 #ifndef NEW_PAM_CONTAINER
@@ -36,8 +36,7 @@
 */
 # define NEWPAM_MAX_TRIES	20
 
-int	new_pam_container(pam_handle_t *pamh,
-			  char * path,
+int	new_pam_container(char * path,
 			  int flags);
 
 #endif /* NEW_PAM_CONTAINER */

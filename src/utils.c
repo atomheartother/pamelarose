@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Fri Oct 14 15:24:56 2016 Thomas Navennec
-** Last update Sat Oct 15 13:33:14 2016 Thomas Navennec
+** Last update Sun Oct 16 16:03:13 2016 Thomas Navennec
 */
 
 #include <stdlib.h>
@@ -29,7 +29,7 @@ void	err_msg(const char * const msg, const int flags)
 ** Returns an allocated string
 ** containing the full path to the encrypted volume
 */
-char	*get_crypt_path(pam_handle_t *pamh, const int flags)
+char	*get_crypt_path(const int flags)
 {
   char	usrname[LOGIN_NAME_MAX + 1];
   char		*path;

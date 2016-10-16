@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Fri Oct 14 17:10:44 2016 Thomas Navennec
-Last update Sun Oct 16 15:56:59 2016 Thomas Navennec
+** Last update Sun Oct 16 16:02:59 2016 Thomas Navennec
 */
 
 #include <sys/types.h>
@@ -50,10 +50,10 @@ void	putstring(const char * const s)
 }
 
 int	execute_file(char *exec, int argc,
-		     char *args[], int flag)
+		     char *args[], int flags)
 {
   int		err = 0;
-  unsigned	i = 0;
+  int		i = 0;
 
   while (i < argc)
     {
@@ -90,8 +90,6 @@ int	create_file(char * path,
 		    int flags)
 {
   char		*args[6];
-  unsigned	i = 0;
-  int		err = 0;
 
   args[0] = strdup(DD_ARG0);
   args[1] = strdup(DD_ARG1);
@@ -130,7 +128,7 @@ char	*get_container_size()
 /*
 ** Takes an existing file path and makes it a luks container
 */
-void	encrypt_file(char *path, int flags)
+int	encrypt_file(char *path, int flags)
 {
   char	*args[5];
 
@@ -181,7 +179,7 @@ int	new_pam_container(char * path,
     {
       unlink(path);
       err_msg(ERR_CRYPT, flags);
-      return 1
+      return 1;
     }
   return 0;
 }

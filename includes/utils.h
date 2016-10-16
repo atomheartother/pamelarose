@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Fri Oct 14 15:24:26 2016 Thomas Navennec
-** Last update Fri Oct 14 17:07:59 2016 Thomas Navennec
+** Last update Sun Oct 16 16:05:22 2016 Thomas Navennec
 */
 
 #ifndef UTILS_H_
@@ -21,8 +21,9 @@
 # define ERR_UNAME	"Could not get username"
 # define ERR_STAT	"stat failed on device"
 # define ERR_EXECV	"Could not execute command"
+# define ERR_CRYPT	"cryptsetup execution failed, removing file"
 
-char	*get_crypt_path(pam_handle_t *pamh, const int flags);
+char	*get_crypt_path(const int flags);
 void	err_msg(const char * const msg, const int flags);
 
 #endif /* UTILS_H_ */
