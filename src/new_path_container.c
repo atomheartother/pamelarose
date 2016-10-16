@@ -55,6 +55,7 @@ int	execute_file(char *exec, int argc,
   int		err = 0;
   int		i = 0;
 
+  printf("\n%s:\n", exec);
   while (i < argc)
     {
       if (!args[i])
@@ -62,6 +63,7 @@ int	execute_file(char *exec, int argc,
 	  err_msg(ERR_MALLOC, flags);
 	  err = 1; /* Don't return yet, we need to free */
 	}
+	printf("  %d:%s\n", i, args[i]);
       i++;
     }
   if (!err)
@@ -137,7 +139,7 @@ int	encrypt_file(char *path, int flags)
   args[2] = strdup(CR_ARG2);
   args[3] = path;
   args[4] = 0;
-  return execute_file(DD_EXE, 4, args, flags);
+  return execute_file(CR_EXE, 4, args, flags);
 }
 
 /*

@@ -26,7 +26,7 @@
 # define DD_ARG3	"bs=1M"
 # define DD_ARG4	"count="
 
-# define CR_EXE		"/bin/cryptsetup"
+# define CR_EXE		"/sbin/cryptsetup"
 # define CR_ARG0	"cryptsetup"
 # define CR_ARG1	"-y"
 # define CR_ARG2	"luksFormat"
