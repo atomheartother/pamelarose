@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Sun Oct  9 18:25:25 2016 Thomas Navennec
-** Last update Sun Oct 16 16:05:13 2016 Thomas Navennec
+** Last update Sun Oct 16 17:34:55 2016 Thomas Navennec
 */
 
 /*
@@ -54,7 +54,7 @@ int	pam_sm_open_session(__attribute__((unused))pam_handle_t *pamh,
 	  return PAM_SESSION_ERR;
 	}
     }
-  /* access_container(pamh, path, flags); */
+  /* open_container(path, flags); */
   free(path);
   return (PAM_SUCCESS);
 }

@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Fri Oct 14 17:10:44 2016 Thomas Navennec
-** Last update Sun Oct 16 16:02:59 2016 Thomas Navennec
+** Last update Sun Oct 16 16:45:54 2016 Thomas Navennec
 */
 
 #include <sys/types.h>
@@ -47,41 +47,6 @@ char	*concat_and_alloc(const char * const s1, const char * const s2)
 void	putstring(const char * const s)
 {
   write(STDOUT_FILENO, s, strlen(s));
-}
-
-int	execute_file(char *exec, int argc,
-		     char *args[], int flags)
-{
-  int		err = 0;
-  int		i = 0;
-
-  printf("\n%s:\n", exec);
-  while (i < argc)
-    {
-      if (!args[i])
-	{
-	  err_msg(ERR_MALLOC, flags);
-	  err = 1; /* Don't return yet, we need to free */
-	}
-	printf("  %d:%s\n", i, args[i]);
-      i++;
-    }
-  if (!err)
-    {
-      if (execv(exec, args) == -1)
-	{
-	  err = 1;
-	  err_msg(ERR_EXECV, flags);
-	}
-    }
-  i = 0;
-  while (i < 5)
-    {
-      if (args[i])
-	free(args[i]);
-      i++;
-    }
-  return err;
 }
 
 /*

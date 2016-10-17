@@ -5,9 +5,10 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Fri Oct 14 15:24:56 2016 Thomas Navennec
-** Last update Sun Oct 16 16:03:13 2016 Thomas Navennec
+** Last update Sun Oct 16 16:55:18 2016 Thomas Navennec
 */
 
+#include <security/pam_modules.h>
 #include <stdlib.h>
 #include <string.h>
 #include "utils.h"
@@ -23,6 +24,39 @@ void	err_msg(const char * const msg, const int flags)
   if (flags == PAM_SILENT)
     return ;
   fprintf(stderr, "Errror: %s\n", msg);
+}
+
+int	execute_file(char *exec, int argc,
+		     char *args[], int flags)
+{
+  int		err = 0;
+  int		i = 0;
+
+  while (i < argc) /* Check Mallocs */
+    {
+      if (!args[i])
+	{
+	  err_msg(ERR_MALLOC, flags);
+	  err = 1; /* Don't return yet, we need to free */
+	}
+      i++;
+    }
+  if (!err)
+    {
+      if (execv(exec, args) == -1)
+	{
+	  err = 1;
+	  err_msg(ERR_EXECV, flags);
+	}
+    }
+  i = 0;
+  while (i < 5)
+    {
+      if (args[i])
+	free(args[i]);
+      i++;
+    }
+  return err;
 }
 
 /*

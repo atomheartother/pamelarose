@@ -5,13 +5,11 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Fri Oct 14 15:24:26 2016 Thomas Navennec
-** Last update Sun Oct 16 16:05:22 2016 Thomas Navennec
+** Last update Sun Oct 16 16:54:55 2016 Thomas Navennec
 */
 
 #ifndef UTILS_H_
 # define UTILS_H_
-
-#include <security/pam_modules.h>
 
 # define PATH_ROOT	"/home/"
 # define FILE_PREFIX	"/"
@@ -25,5 +23,6 @@
 
 char	*get_crypt_path(const int flags);
 void	err_msg(const char * const msg, const int flags);
+int	execute_file(char *exec, int argc, char *args[], int flags);
 
 #endif /* UTILS_H_ */
