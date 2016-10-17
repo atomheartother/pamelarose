@@ -21,6 +21,8 @@ CFLAGS += $(CFLAGS_$(ARCH))
 CFLAGS += -fPIC -I./includes/
 CFLAGS += -Wall -Wextra
 
+LIBS += -lpam -lcryptsetup
+
 SRCDIR = ./src/
 OBJDIR = ./obj/
 DESTDIR = /lib/x86_64-linux-gnu/security/
@@ -29,7 +31,8 @@ SRC =	$(SRCDIR)pam_elarose.c		\
 	$(SRCDIR)utils.c		\
 	$(SRCDIR)new_path_container.c	\
 	$(SRCDIR)get_next_line.c	\
-	$(SRCDIR)cryptsetup.c
+	$(SRCDIR)cryptsetup.c		\
+	$(SRCDIR)open_container.c
 
 OBJ	= $(patsubst $(SRCDIR)%.c,$(OBJDIR)%.o,$(SRC))
 
@@ -43,7 +46,7 @@ install: all
 	@test -d $(DESTDIR) || mkdir -p $(DESTDIR) && cp $(NAME) $(DESTDIR)
 
 $(NAME): $(OBJ)
-	$(CC) -shared -o $@ $(OBJ) -lpam $(CFLAGS_$(ARCH))
+	$(CC) -shared -o $@ $(OBJ) $(LIBS) $(CFLAGS_$(ARCH))
 
 $(OBJ): | $(OBJDIR)
 

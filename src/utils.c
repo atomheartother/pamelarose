@@ -28,7 +28,7 @@ void	err_msg(const char * const msg, const int flags)
 {
   if (flags == PAM_SILENT)
     return ;
-  fprintf(stderr, "Errror: %s\n", msg);
+  fprintf(stderr, "Error: %s\n", msg);
 }
 
 int	execute_file(char *exec, int argc,

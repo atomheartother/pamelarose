@@ -42,7 +42,7 @@ int	pam_sm_open_session(__attribute__((unused))pam_handle_t *pamh,
     {
       if (errno == ENOENT)
 	{
-	  if (new_pam_container(path, flags) == -1) /* No container was created */
+	  if (new_pam_container(path, flags)) /* No container was created */
 	    {
 	      free(path);
 	      return (PAM_SESSION_ERR);

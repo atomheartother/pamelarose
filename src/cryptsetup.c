@@ -64,7 +64,7 @@ int	activate_file(const char *path, int flags)
       return 1;
     }
   int err = 0;
-  if (crypt_activate_by_passphrase(cd, "labite", CRYPT_ANY_SLOT, "zobzobzob", 9,
+  if (crypt_activate_by_passphrase(cd, "labite", CRYPT_ANY_SLOT, NULL, 0,
 				   CRYPT_ACTIVATE_READONLY) < 0)
     {
       err_msg(strerror(errno), flags);

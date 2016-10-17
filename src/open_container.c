@@ -20,4 +20,5 @@ int	open_container(char *path, int flags)
       err_msg(ERR_LOPEN, flags);
       return 1;
     }
+  return 0;
 }

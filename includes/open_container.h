@@ -13,7 +13,7 @@
 
 # define ERR_LOPEN	"Could not open encrypted device"
 
-# define PAM_OPEN	"** PAMelaRose container opening **"
+# define PAM_OPEN	"** PAMelaRose container opening **\n"
 
 int	open_container(char *path, int flags);
 
