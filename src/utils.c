@@ -102,7 +102,7 @@ char	*get_crypt_path(const int flags)
 char	*get_crypt_name(const int flags)
 {
   char		*name;
-  uid_t		uid = getuid();
+  uid_t		uid = geteuid();
   size_t namelen = strlen(NAME_STR);
 
   if (!(name = malloc(sizeof(char) * (namelen + 5))))
