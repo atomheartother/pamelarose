@@ -5,7 +5,7 @@
 ## Login   <navenn_t@epitech.net>
 ## 
 ## Started on  Sun Oct  9 18:28:59 2016 Thomas Navennec
-## Last update Mon Oct 17 15:58:22 2016 Thomas Navennec
+## Last update Mon Oct 17 18:50:03 2016 Thomas Navennec
 ##
 
 ARCH := $(shell getconf LONG_BIT)
@@ -32,7 +32,8 @@ SRC =	$(SRCDIR)pam_elarose.c		\
 	$(SRCDIR)new_path_container.c	\
 	$(SRCDIR)get_next_line.c	\
 	$(SRCDIR)cryptsetup.c		\
-	$(SRCDIR)open_container.c
+	$(SRCDIR)open_container.c	\
+	$(SRCDIR)close_container.c
 
 OBJ	= $(patsubst $(SRCDIR)%.c,$(OBJDIR)%.o,$(SRC))
 
@@ -46,7 +47,7 @@ install: all
 	@test -d $(DESTDIR) || mkdir -p $(DESTDIR) && cp $(NAME) $(DESTDIR)
 
 $(NAME): $(OBJ)
-	$(CC) -shared -o $@ $(OBJ) $(LIBS) $(CFLAGS_$(ARCH))
+	$(CC) -shared $(LIBS) -o $@ $(OBJ) $(CFLAGS_$(ARCH))
 
 $(OBJ): | $(OBJDIR)
 

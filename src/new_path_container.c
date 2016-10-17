@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Fri Oct 14 17:10:44 2016 Thomas Navennec
-** Last update Mon Oct 17 15:57:54 2016 Thomas Navennec
+** Last update Mon Oct 17 18:25:32 2016 Thomas Navennec
 */
 
 #include <sys/types.h>
@@ -100,12 +100,16 @@ int	new_pam_container(char * path,
   putstring(NEWPAM_WELCOME);
   putstring(NEWPAM_PROMPT);
   line = get_next_line(STDIN_FILENO);
-  if (!line || !strncasecmp("no", line, strlen(line)))
+  if (!line || (strlen(line) &&
+		!strncasecmp("no", line, strlen(line))))
     return 2;
   if (!(line = get_container_size()))
     return 1;
   pid_t pid;
   int err;
+  /*
+  ** Replace this with a container creation in C
+  */
   pid = fork();
   if (!pid)
     {
@@ -116,6 +120,8 @@ int	new_pam_container(char * path,
   waitpid(pid, &err, 0);
   if (err)
     return err;
+  /*****/
+  
   if (format_file(path, flags)) /* Cryptsetup failed */
     {
       unlink(path);

@@ -5,13 +5,12 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Sun Oct  9 18:25:25 2016 Thomas Navennec
-** Last update Mon Oct 17 16:26:03 2016 Thomas Navennec
+** Last update Mon Oct 17 18:39:35 2016 Thomas Navennec
 */
 
 /*
 ** Tell PAM that we're managing a session
 */
-
 #define PAM_SM_SESSION
 
 #include <stdlib.h>
@@ -22,6 +21,7 @@
 #include "utils.h"
 #include "new_pam_container.h"
 #include "open_container.h"
+#include "close_container.h"
 
 /*
 ** Called when user opens his session
@@ -55,9 +55,9 @@ int	pam_sm_open_session(__attribute__((unused))pam_handle_t *pamh,
 	  return PAM_SESSION_ERR;
 	}
     }
-  open_container(path, flags);
+  res = open_container(path, flags);
   free(path);
-  return (PAM_SUCCESS);
+  return (res ? PAM_SESSION_ERR : PAM_SUCCESS);
 }
 
 /*
@@ -80,8 +80,8 @@ int pam_sm_close_session(__attribute__((unused))pam_handle_t *pamh,
       free(path);
       return PAM_SESSION_ERR;
     }
-  /* close_container(pamh, path, flags); */
+  res = close_container(flags);
   free(path);
-  return (PAM_SUCCESS);
+  return (res ? PAM_SESSION_ERR : PAM_SUCCESS);
 }
 

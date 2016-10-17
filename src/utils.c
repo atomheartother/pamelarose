@@ -1,11 +1,11 @@
 /*
 ** utils.c for  in /home/navenn_t/Programmation/crypto/pamelarose
-** 
+1;2802;0c** 
 ** Made by Thomas Navennec
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Fri Oct 14 15:24:56 2016 Thomas Navennec
-** Last update Mon Oct 17 15:31:03 2016 Thomas Navennec
+** Last update Mon Oct 17 18:13:26 2016 Thomas Navennec
 */
 
 #include <limits.h>
@@ -28,7 +28,7 @@ void	err_msg(const char * const msg, const int flags)
 {
   if (flags == PAM_SILENT)
     return ;
-  fprintf(stderr, "Error: %s\n", msg);
+  fprintf(stderr, "PAMelaRose: %s\n", msg);
 }
 
 int	execute_file(char *exec, int argc,
@@ -93,4 +93,32 @@ char	*get_crypt_path(const int flags)
   strcat(path, FILE_PREFIX);
   strcat(path, FILE_NAME);
   return path;
+}
+
+/*
+** Returns an allocate string containing
+** the name the device should be mapped to
+*/
+char	*get_crypt_name(const int flags)
+{
+  char	usrname[LOGIN_NAME_MAX + 1];
+  char		*name;
+  int		res;
+
+  res = getlogin_r(usrname, LOGIN_NAME_MAX + 1);
+  if (res)
+    {
+      err_msg(ERR_UNAME, flags);
+      return NULL;
+    }
+  const size_t len = strlen(usrname) + strlen(NAME_STR);
+  if (!(name = malloc(sizeof(char) * (len + 1))))
+    {
+      err_msg(ERR_MALLOC, flags);
+      return NULL;
+    }
+  name[0] = 0;
+  strcat(name, usrname);
+  strcat(name, NAME_STR);
+  return name;
 }
