@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Fri Oct 14 17:10:44 2016 Thomas Navennec
-** Last update Sun Oct 16 16:45:54 2016 Thomas Navennec
+** Last update Mon Oct 17 15:57:54 2016 Thomas Navennec
 */
 
 #include <sys/types.h>
@@ -18,6 +18,7 @@
 #include "new_pam_container.h"
 #include "utils.h"
 #include "get_next_line.h"
+#include "cryptsetup.h"
 
 int	check_nums(const char *input)
 {
@@ -42,11 +43,6 @@ char	*concat_and_alloc(const char * const s1, const char * const s2)
   strcat(res, s1);
   strcat(res, s2);
   return res;
-}
-
-void	putstring(const char * const s)
-{
-  write(STDOUT_FILENO, s, strlen(s));
 }
 
 /*
@@ -93,21 +89,6 @@ char	*get_container_size()
 }
 
 /*
-** Takes an existing file path and makes it a luks container
-*/
-int	encrypt_file(char *path, int flags)
-{
-  char	*args[5];
-
-  args[0] = strdup(CR_ARG0);
-  args[1] = strdup(CR_ARG1);
-  args[2] = strdup(CR_ARG2);
-  args[3] = path;
-  args[4] = 0;
-  return execute_file(CR_EXE, 4, args, flags);
-}
-
-/*
 ** Returns 2 if the user did not want to create a container
 ** Returns 1 if an error occured
 ** Returns 0 if a container was created succesfully
@@ -135,17 +116,9 @@ int	new_pam_container(char * path,
   waitpid(pid, &err, 0);
   if (err)
     return err;
-  pid = fork();
-  if (!pid)
-    {
-      err = encrypt_file(path, flags);
-      exit(err);
-    }
-  waitpid(pid, &err, 0);
-  if (err) /* Cryptsetup failed */
+  if (format_file(path, flags)) /* Cryptsetup failed */
     {
       unlink(path);
-      err_msg(ERR_CRYPT, flags);
       return 1;
     }
   return 0;

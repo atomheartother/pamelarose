@@ -4,17 +4,20 @@
 ** Made by Thomas Navennec
 ** Login   <navenn_t@epitech.net>
 ** 
-** Started on  Sun Oct 16 16:54:04 2016 Thomas Navennec
-** Last update Sun Oct 16 16:59:33 2016 Thomas Navennec
+** Started on  Mon Oct 17 16:01:38 2016 Thomas Navennec
+** Last update Mon Oct 17 16:25:44 2016 Thomas Navennec
 */
 
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <unsitd.h>
-#include <stdlib.h>
+#include "open_container.h"
 #include "utils.h"
+#include "cryptsetup.h"
 
 int	open_container(char *path, int flags)
 {
-  
+  putstring(PAM_OPEN);
+  if (activate_file(path, flags)) /* LUKSopen failed */
+    {
+      err_msg(ERR_LOPEN, flags);
+      return 1;
+    }
 }

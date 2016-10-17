@@ -5,7 +5,7 @@
 ## Login   <navenn_t@epitech.net>
 ## 
 ## Started on  Sun Oct  9 18:28:59 2016 Thomas Navennec
-## Last update Sat Oct 15 13:31:22 2016 Thomas Navennec
+## Last update Mon Oct 17 15:58:22 2016 Thomas Navennec
 ##
 
 ARCH := $(shell getconf LONG_BIT)
@@ -28,7 +28,8 @@ DESTDIR = /lib/x86_64-linux-gnu/security/
 SRC =	$(SRCDIR)pam_elarose.c		\
 	$(SRCDIR)utils.c		\
 	$(SRCDIR)new_path_container.c	\
-	$(SRCDIR)get_next_line.c
+	$(SRCDIR)get_next_line.c	\
+	$(SRCDIR)cryptsetup.c
 
 OBJ	= $(patsubst $(SRCDIR)%.c,$(OBJDIR)%.o,$(SRC))
 

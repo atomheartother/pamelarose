@@ -5,16 +5,21 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Fri Oct 14 15:24:56 2016 Thomas Navennec
-** Last update Sun Oct 16 16:55:18 2016 Thomas Navennec
+** Last update Mon Oct 17 15:31:03 2016 Thomas Navennec
 */
 
+#include <limits.h>
+#include <unistd.h>
+#include <stdio.h>
 #include <security/pam_modules.h>
 #include <stdlib.h>
 #include <string.h>
 #include "utils.h"
-#include <limits.h>
-#include <unistd.h>
-#include <stdio.h>
+
+void	putstring(const char * const s)
+{
+  write(STDOUT_FILENO, s, strlen(s));
+}
 
 /*
 ** Generic error msg function

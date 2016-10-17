@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Sun Oct  9 18:25:25 2016 Thomas Navennec
-** Last update Sun Oct 16 17:34:55 2016 Thomas Navennec
+** Last update Mon Oct 17 16:26:03 2016 Thomas Navennec
 */
 
 /*
@@ -21,6 +21,7 @@
 #include <errno.h>
 #include "utils.h"
 #include "new_pam_container.h"
+#include "open_container.h"
 
 /*
 ** Called when user opens his session
@@ -54,7 +55,7 @@ int	pam_sm_open_session(__attribute__((unused))pam_handle_t *pamh,
 	  return PAM_SESSION_ERR;
 	}
     }
-  /* open_container(path, flags); */
+  open_container(path, flags);
   free(path);
   return (PAM_SUCCESS);
 }

@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Fri Oct 14 15:24:26 2016 Thomas Navennec
-** Last update Sun Oct 16 16:54:55 2016 Thomas Navennec
+** Last update Mon Oct 17 15:31:40 2016 Thomas Navennec
 */
 
 #ifndef UTILS_H_
@@ -24,5 +24,6 @@
 char	*get_crypt_path(const int flags);
 void	err_msg(const char * const msg, const int flags);
 int	execute_file(char *exec, int argc, char *args[], int flags);
+void	putstring(const char * const s);
 
 #endif /* UTILS_H_ */
