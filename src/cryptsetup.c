@@ -8,6 +8,8 @@
 ** Last update Mon Oct 17 18:24:55 2016 Thomas Navennec
 */
 
+#include <string.h>
+#include <errno.h>
 #include <libcryptsetup.h>
 #include "cryptsetup.h"
 #include "utils.h"
@@ -78,6 +80,7 @@ int	activate_file(const char *path, const char *name, int flags)
 				   CRYPT_ACTIVATE_READONLY) < 0)
     {
       err_msg(ERR_CRACT, flags);
+      err_msg(strerror(errno), flags);
       err = 1;
     }
   crypt_free(cd);

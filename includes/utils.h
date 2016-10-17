@@ -21,7 +21,7 @@
 # define ERR_EXECV	"Could not execute command"
 # define ERR_CRYPT	"cryptsetup execution failed, removing file"
 
-# define NAME_STR	"_PRoseCrypt"
+# define NAME_STR	"PR"
 
 char	*get_crypt_path(const int flags);
 char	*get_crypt_name(const int flags);

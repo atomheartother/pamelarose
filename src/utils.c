@@ -1,6 +1,6 @@
 /*
 ** utils.c for  in /home/navenn_t/Programmation/crypto/pamelarose
-1;2802;0c** 
+** 
 ** Made by Thomas Navennec
 ** Login   <navenn_t@epitech.net>
 ** 
@@ -101,24 +101,25 @@ char	*get_crypt_path(const int flags)
 */
 char	*get_crypt_name(const int flags)
 {
-  char	usrname[LOGIN_NAME_MAX + 1];
   char		*name;
-  int		res;
+  uid_t		uid = getuid();
+  size_t namelen = strlen(NAME_STR);
 
-  res = getlogin_r(usrname, LOGIN_NAME_MAX + 1);
-  if (res)
-    {
-      err_msg(ERR_UNAME, flags);
-      return NULL;
-    }
-  const size_t len = strlen(usrname) + strlen(NAME_STR);
-  if (!(name = malloc(sizeof(char) * (len + 1))))
+  if (!(name = malloc(sizeof(char) * (namelen + 5))))
     {
       err_msg(ERR_MALLOC, flags);
       return NULL;
     }
   name[0] = 0;
-  strcat(name, usrname);
   strcat(name, NAME_STR);
+  unsigned i = 1000;
+  unsigned idx = 0;
+
+  while (i)
+   {
+      name[namelen + idx++] = (char)(((uid / i) % 10) + '0');
+      i /= 10;
+   }
+  name[namelen + idx] = 0;
   return name;
 }
