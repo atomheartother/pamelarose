@@ -5,15 +5,17 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Fri Oct 14 17:10:44 2016 Thomas Navennec
-** Last update Tue Oct 18 11:09:33 2016 Thomas Navennec
+** Last update Tue Oct 18 11:52:42 2016 Thomas Navennec
 */
 
+#include <time.h>
 #include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <sys/wait.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
-#include <strings.h>
 #include <stdlib.h>
 #include "new_pam_container.h"
 #include "utils.h"
@@ -33,7 +35,8 @@ int	check_nums(const char *input)
   return 0;
 }
 
-char	*concat_and_alloc(const char * const s1, const char * const s2)
+char	*concat_and_alloc(const char * const s1,
+			  const char * const s2)
 {
   char	*res;
 
@@ -52,17 +55,39 @@ int	create_file(char * path,
 		    char *size,
 		    int flags)
 {
-  char		*args[6];
+  int	count = 0;
+  int	fd;
 
-  args[0] = strdup(DD_ARG0);
-  args[1] = strdup(DD_ARG1);
-  args[2] = concat_and_alloc(DD_ARG2, path);
-  args[3] = strdup(DD_ARG3);
-  args[4] = concat_and_alloc(DD_ARG4, size);
-  args[5] = 0;
-  free(path);
-  free(size);
-  return execute_file(DD_EXE, 5, args, flags);
+  fd = open(path, O_CREAT | O_TRUNC | O_RDWR, 0644);
+  if (fd == -1)
+    {
+      err_msg(ERR_CREAT, flags);
+      return 1;
+    }
+  while (*size)
+    {
+      count = count * 10 + ((*size) - '0');
+      size++;
+    }
+  printf("Writing %dMB\n", count);
+  srandom(time(NULL));
+  while (count)
+    {
+      char block[BLOCK_SIZE] = {0};
+      unsigned i = 0;
+      while (i < BLOCK_SIZE)
+	{
+	  char c = (random() % 256) - 127;
+	  block[i++] = c;
+	}
+      if (write(fd, block, BLOCK_SIZE) == -1)
+	{
+	  err_msg(BAD_WRITE, flags);
+	  return 1;
+	}
+      count--;
+    }
+  return 0;
 }
 
 char	*get_container_size()
@@ -106,23 +131,10 @@ int	new_pam_container(char * path,
   free(line);
   if (!(line = get_container_size()))
     return 1;
-  pid_t pid;
-  int err;
-  /*
-  ** Replace this with a container creation in C
-  */
-  pid = fork();
-  if (!pid)
-    {
-      err = create_file(path, line, flags);
-      exit(err);
-    }
-  free(line);
-  waitpid(pid, &err, 0);
+  int	err = create_file(path, line, flags);
   if (err)
     return err;
-  /*****/
-  
+  return 0;
   if (format_file(path, flags)) /* Cryptsetup failed */
     {
       unlink(path);

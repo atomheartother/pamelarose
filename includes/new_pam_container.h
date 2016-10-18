@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Fri Oct 14 17:03:26 2016 Thomas Navennec
-** Last update Mon Oct 17 18:25:49 2016 Thomas Navennec
+** Last update Tue Oct 18 11:32:58 2016 Thomas Navennec
 */
 
 #ifndef NEW_PAM_CONTAINER
@@ -19,6 +19,8 @@
 # define NEWPAM_ERR	"Invalid input, expected digits."
 # define NEWPAM_DONE	"Container created:"
 
+# define BLOCK_SIZE	1048576 /* in bytes */
+
 # define DD_EXE		"/bin/dd"
 # define DD_ARG0	"dd"
 # define DD_ARG1	"if=/dev/urandom"
@@ -30,6 +32,9 @@
 # define CR_ARG0	"cryptsetup"
 # define CR_ARG1	"-y"
 # define CR_ARG2	"luksFormat"
+
+# define ERR_CREAT	"Failed to create container"
+# define BAD_WRITE	"Write to container failed"
 
 /*
 ** Tries the user gets to enter the size of his container
