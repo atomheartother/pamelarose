@@ -12,12 +12,12 @@
 #include "utils.h"
 #include "cryptsetup.h"
 
-int	close_container(char * path, int flags)
+int	close_container(char * path, const char *uname, int flags)
 {
   char	*name;
   int	res;
 
-  if (!(name = get_crypt_name(flags)))
+  if (!(name = get_crypt_name(uname, flags)))
     return 1;
   res = deactivate_file(path, name, flags) > 0;
   free(name);

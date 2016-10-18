@@ -11,6 +11,6 @@
 #ifndef CLOSE_CONTAINER_H_
 # define CLOSE_CONTAINER_H_
 
-int	close_container(char *path, int flags);
+int	close_container(char *path, const char* uname, int flags);
 
 #endif

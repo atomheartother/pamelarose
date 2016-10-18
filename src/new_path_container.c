@@ -62,6 +62,7 @@ int	create_file(char * path,
   if (fd == -1)
     {
       err_msg(ERR_CREAT, flags);
+      err_msg(path, flags);
       return 1;
     }
   while (*size)
@@ -119,6 +120,7 @@ char	*get_container_size()
 ** Returns 0 if a container was created succesfully
 */
 int	new_pam_container(char * path,
+			  const char * uname,
 			  int flags)
 {
   char *line;
@@ -134,7 +136,6 @@ int	new_pam_container(char * path,
   int	err = create_file(path, line, flags);
   if (err)
     return err;
-  return 0;
   if (format_file(path, flags)) /* Cryptsetup failed */
     {
       unlink(path);

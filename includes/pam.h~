@@ -1,0 +1,10 @@
+#ifndef PAM_H_
+# define PAM_H_
+
+#include <security/pam_modules.h>
+
+int	get_pam_uname(pam_handle_t *pamh,
+		      const char **name,
+		      int flags);
+
+#endif

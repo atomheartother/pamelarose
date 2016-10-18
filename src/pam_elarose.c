@@ -22,27 +22,31 @@
 #include "new_pam_container.h"
 #include "open_container.h"
 #include "close_container.h"
+#include "pam.h"
 
 /*
 ** Called when user opens his session
 */
-int	pam_sm_open_session(__attribute__((unused))pam_handle_t *pamh,
+int	pam_sm_open_session(pam_handle_t *pamh,
 			    int flags,
 			    __attribute__((unused))int argc,
 			    __attribute__((unused))const char **argv)
 {
+  const char  *name;
   char	*path;
   struct stat buf;
   int	res;
 
-  if (!(path = get_crypt_path(flags)))
+  if (get_pam_uname(pamh, &name, flags))
+    return PAM_SESSION_ERR;
+  if (!(path = get_crypt_path(name, flags)))
     return PAM_SESSION_ERR;
   res = stat(path, &buf);
   if (res == -1)
     {
       if (errno == ENOENT)
 	{
-	  if ((res = new_pam_container(path, flags))) /* No container was created */
+	  if ((res = new_pam_container(path, name, flags))) /* No container was created */
 	    {
 	      free(path);
 	      return (res == 2 ? PAM_SUCCESS : PAM_SESSION_ERR);
@@ -55,7 +59,7 @@ int	pam_sm_open_session(__attribute__((unused))pam_handle_t *pamh,
 	  return PAM_SESSION_ERR;
 	}
     }
-  res = open_container(path, flags);
+  res = open_container(path, name, flags);
   free(path);
   return (res ? PAM_SESSION_ERR : PAM_SUCCESS);
 }
@@ -63,16 +67,19 @@ int	pam_sm_open_session(__attribute__((unused))pam_handle_t *pamh,
 /*
 ** Called when user closes his session
 */
-int pam_sm_close_session(__attribute__((unused))pam_handle_t *pamh,
+int pam_sm_close_session(pam_handle_t *pamh,
 			 int flags,
 			 __attribute__((unused))int argc,
 			 __attribute__((unused))const char **argv)
 {
+  const char *name;
   char	*path;
   struct stat buf;
   int	res;
 
-  if (!(path = get_crypt_path(flags)))
+  if (get_pam_uname(pamh, &name, flags))
+    return PAM_SESSION_ERR;
+  if (!(path = get_crypt_path(name, flags)))
     return PAM_SESSION_ERR;
   res = stat(path, &buf);
   if (res == -1)
@@ -80,7 +87,7 @@ int pam_sm_close_session(__attribute__((unused))pam_handle_t *pamh,
       free(path);
       return PAM_SESSION_ERR;
     }
-  res = close_container(path, flags);
+  res = close_container(path, name, flags);
   free(path);
   return (res ? PAM_SESSION_ERR : PAM_SUCCESS);
 }

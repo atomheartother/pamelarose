@@ -14,12 +14,12 @@
 #include "utils.h"
 #include "cryptsetup.h"
 
-int	open_container(char *path, int flags)
+int	open_container(char *path, const char *uname, int flags)
 {
   char	*name;
   int	res;
 
-  if (!(name = get_crypt_name(flags)))
+  if (!(name = get_crypt_name(uname, flags)))
     return 1;
   printf(PAM_OPEN, path);
   res = activate_file(path, name, flags); /* LUKSopen failed */

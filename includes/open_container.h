@@ -16,6 +16,6 @@
 # define PAM_OPEN	"** PAMelaRose: opening %s **\n"
 # define PAM_NOOPEN	"Container was not opened\n"
 
-int	open_container(char *path, int flags);
+int	open_container(char *path, const char *uname, int flags);
 
 #endif

@@ -11,8 +11,6 @@
 #ifndef NEW_PAM_CONTAINER
 # define NEW_PAM_CONTAINER
 
-# include <security/pam_modules.h>
-
 # define NEWPAM_WELCOME	"Welcome to the PAMelaRose container creation.\n"
 # define NEWPAM_PROMPT	"Would you like to create an encrypted container? [Y/n]:"
 # define NEWPAM_SIZE	"Please enter the desired size for your container (in MB):"
@@ -39,8 +37,8 @@
 /*
 ** Tries the user gets to enter the size of his container
 */
-# define NEWPAM_MAX_TRIES	20
+# define NEWPAM_MAX_TRIES	5
 
-int	new_pam_container(char * path, int flags);
+int	new_pam_container(char * path, const char *uname, int flags);
 
 #endif /* NEW_PAM_CONTAINER */

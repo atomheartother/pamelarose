@@ -22,7 +22,7 @@ CFLAGS += $(CFLAGS_$(ARCH))
 CFLAGS += -I./includes/
 CFLAGS += -Wall -Wextra
 
-LIBS += -lcryptsetup
+LIBS += -lcryptsetup -lpam
 
 SRCDIR = ./src/
 OBJDIR = ./obj/
@@ -34,6 +34,7 @@ SRC =	$(SRCDIR)pam_elarose.c		\
 	$(SRCDIR)get_next_line.c	\
 	$(SRCDIR)cryptsetup.c		\
 	$(SRCDIR)open_container.c	\
+	$(SRCDIR)pam.c			\
 	$(SRCDIR)close_container.c
 
 SRCBIN = $(SRCDIR)main.c
@@ -52,7 +53,7 @@ install: all
 	@test -d $(DESTDIR) || mkdir -p $(DESTDIR) && cp $(NAME) $(DESTDIR)
 
 $(NAME): $(OBJ)
-	$(CC) -shared -lpam $(LIBS) -o $@ $(OBJ) $(CFLAGS)
+	$(CC) -shared $(LIBS) -o $@ $(OBJ) $(CFLAGS)
 
 $(NAMEBIN): $(OBJBIN)
 	$(CC) $(LIBS) -o $@ $(OBJBIN) $(CFLAGS)
