@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Tue Oct 18 08:54:43 2016 Thomas Navennec
-** Last update Tue Oct 18 10:06:04 2016 Thomas Navennec
+** Last update Tue Oct 18 10:57:46 2016 Thomas Navennec
 */
 
 #include <unistd.h>
@@ -18,11 +18,9 @@
 
 int	del_container(char *path, int flags)
 {
-  int	res;
+  int	res = 0;
 
-  res = close_container(path, flags);
-  if (res)
-    return res;
+  res = close_container(path, 0x8000U);
   if (unlink(path))
     {
       err_msg(ERR_UNLINK, flags);

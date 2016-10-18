@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Fri Oct 14 17:10:44 2016 Thomas Navennec
-** Last update Mon Oct 17 18:25:32 2016 Thomas Navennec
+** Last update Tue Oct 18 11:09:33 2016 Thomas Navennec
 */
 
 #include <sys/types.h>
@@ -103,6 +103,7 @@ int	new_pam_container(char * path,
   if (!line || (strlen(line) &&
 		!strncasecmp("no", line, strlen(line))))
     return 2;
+  free(line);
   if (!(line = get_container_size()))
     return 1;
   pid_t pid;

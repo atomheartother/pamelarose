@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Mon Oct 17 15:16:02 2016 Thomas Navennec
-** Last update Mon Oct 17 18:24:25 2016 Thomas Navennec
+** Last update Tue Oct 18 10:48:37 2016 Thomas Navennec
 */
 
 #ifndef CRYPTSETUP_H_
@@ -24,6 +24,6 @@
 
 int	format_file(const char * file, int flags);
 int	activate_file(const char * file, const char * name, int flags);
-int	deactivate_file(const char * name, int flags);
+int	deactivate_file(const char *path, const char * name, int flags);
 
 #endif
