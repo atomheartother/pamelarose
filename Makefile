@@ -5,12 +5,13 @@
 ## Login   <navenn_t@epitech.net>
 ## 
 ## Started on  Sun Oct  9 18:28:59 2016 Thomas Navennec
-## Last update Mon Oct 17 18:50:03 2016 Thomas Navennec
+## Last update Tue Oct 18 10:14:18 2016 Thomas Navennec
 ##
 
 ARCH := $(shell getconf LONG_BIT)
 
 NAME = pam_elarose.so
+NAMEBIN = pamelaRose
 
 CC = gcc
 
@@ -18,10 +19,10 @@ CFLAGS_32 += -m32
 CFLAGS_64 += -m64
 
 CFLAGS += $(CFLAGS_$(ARCH))
-CFLAGS += -fPIC -I./includes/
+CFLAGS += -I./includes/
 CFLAGS += -Wall -Wextra
 
-LIBS += -lpam -lcryptsetup
+LIBS += -lcryptsetup
 
 SRCDIR = ./src/
 OBJDIR = ./obj/
@@ -35,11 +36,15 @@ SRC =	$(SRCDIR)pam_elarose.c		\
 	$(SRCDIR)open_container.c	\
 	$(SRCDIR)close_container.c
 
-OBJ	= $(patsubst $(SRCDIR)%.c,$(OBJDIR)%.o,$(SRC))
+SRCBIN = $(SRCDIR)main.c
+
+OBJ	= $(patsubst $(SRCDIR)%.c,$(OBJDIR)shared_%.o,$(SRC))
+
+OBJBIN	= $(patsubst $(SRCDIR)%.c,$(OBJDIR)bin_%.o,$(SRCBIN) $(SRC))
 
 RM = rm -rf
 
-all: $(NAME)
+all: $(NAME) $(NAMEBIN)
 
 # Do not do this outside the VM!
 # Installs the binary in the right directory FOR DEBIAN ONLY!
@@ -47,14 +52,21 @@ install: all
 	@test -d $(DESTDIR) || mkdir -p $(DESTDIR) && cp $(NAME) $(DESTDIR)
 
 $(NAME): $(OBJ)
-	$(CC) -shared $(LIBS) -o $@ $(OBJ) $(CFLAGS_$(ARCH))
+	$(CC) -shared -lpam $(LIBS) -o $@ $(OBJ) $(CFLAGS)
+
+$(NAMEBIN): $(OBJBIN)
+	$(CC) $(LIBS) -o $@ $(OBJBIN) $(CFLAGS)
 
 $(OBJ): | $(OBJDIR)
+$(OBJBIN): | $(OBJDIR)
 
 $(OBJDIR):
 	@mkdir -p $@
 
-$(OBJDIR)%.o : $(SRCDIR)%.c
+$(OBJDIR)shared_%.o : $(SRCDIR)%.c
+	$(CC) -fPIC $(CFLAGS) -c $< -o $@
+
+$(OBJDIR)bin_%.o : $(SRCDIR)%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
@@ -62,5 +74,6 @@ clean:
 
 fclean: clean
 	$(RM) $(NAME)
+	$(RM) $(NAMEBIN)
 
 re: fclean all

@@ -5,14 +5,14 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Mon Oct 17 18:34:45 2016 Thomas Navennec
-** Last update Mon Oct 17 18:40:44 2016 Thomas Navennec
+** Last update Tue Oct 18 10:05:38 2016 Thomas Navennec
 */
 
 #include <stdlib.h>
 #include "utils.h"
 #include "cryptsetup.h"
 
-int	close_container(int flags)
+int	close_container(__attribute__((unused)) char * path, int flags)
 {
   char	*name;
   int	res;

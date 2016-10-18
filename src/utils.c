@@ -5,9 +5,11 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Fri Oct 14 15:24:56 2016 Thomas Navennec
-** Last update Mon Oct 17 18:13:26 2016 Thomas Navennec
+** Last update Tue Oct 18 10:26:31 2016 Thomas Navennec
 */
 
+#include <sys/types.h>
+#include <pwd.h>
 #include <limits.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -70,17 +72,16 @@ int	execute_file(char *exec, int argc,
 */
 char	*get_crypt_path(const int flags)
 {
-  char	usrname[LOGIN_NAME_MAX + 1];
+  struct passwd *pwd;
   char		*path;
-  int		res;
 
-  res = getlogin_r(usrname, LOGIN_NAME_MAX + 1);
-  if (res)
+  pwd = getpwuid(getuid());
+  if (!pwd)
     {
-      err_msg(ERR_UNAME, flags);
+      err_msg(ERR_PWD, flags);
       return NULL;
     }
-  const size_t len = strlen(PATH_ROOT) + strlen(usrname) +
+  const size_t len = strlen(PATH_ROOT) + strlen(pwd->pw_name) +
     strlen(FILE_PREFIX) + strlen(FILE_NAME);
   if (!(path = malloc(sizeof(char) * (len + 1))))
     {
@@ -89,7 +90,7 @@ char	*get_crypt_path(const int flags)
     }
   path[0] = 0;
   strcat(path, PATH_ROOT);
-  strcat(path, usrname);
+  strcat(path, pwd->pw_name);
   strcat(path, FILE_PREFIX);
   strcat(path, FILE_NAME);
   return path;
@@ -102,9 +103,16 @@ char	*get_crypt_path(const int flags)
 char	*get_crypt_name(const int flags)
 {
   char		*name;
-  uid_t		uid = geteuid();
   size_t namelen = strlen(NAME_STR);
 
+  struct passwd *pwd;
+  pwd = getpwuid(getuid());
+  if (!pwd)
+    {
+      err_msg(ERR_PWD, flags);
+      return NULL;
+    }
+  uid_t		uid = pwd->pw_uid;
   if (!(name = malloc(sizeof(char) * (namelen + 5))))
     {
       err_msg(ERR_MALLOC, flags);
@@ -116,10 +124,10 @@ char	*get_crypt_name(const int flags)
   unsigned idx = 0;
 
   while (i)
-   {
+    {
       name[namelen + idx++] = (char)(((uid / i) % 10) + '0');
       i /= 10;
-   }
+    }
   name[namelen + idx] = 0;
   return name;
 }

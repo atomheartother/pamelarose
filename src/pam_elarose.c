@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Sun Oct  9 18:25:25 2016 Thomas Navennec
-** Last update Mon Oct 17 18:39:35 2016 Thomas Navennec
+** Last update Tue Oct 18 10:01:13 2016 Thomas Navennec
 */
 
 /*
@@ -42,10 +42,10 @@ int	pam_sm_open_session(__attribute__((unused))pam_handle_t *pamh,
     {
       if (errno == ENOENT)
 	{
-	  if (new_pam_container(path, flags)) /* No container was created */
+	  if ((res = new_pam_container(path, flags))) /* No container was created */
 	    {
 	      free(path);
-	      return (PAM_SESSION_ERR);
+	      return (res == 2 ? PAM_SUCCESS : PAM_SESSION_ERR);
 	    }
 	}
       else
@@ -80,7 +80,7 @@ int pam_sm_close_session(__attribute__((unused))pam_handle_t *pamh,
       free(path);
       return PAM_SESSION_ERR;
     }
-  res = close_container(flags);
+  res = close_container(path, flags);
   free(path);
   return (res ? PAM_SESSION_ERR : PAM_SUCCESS);
 }
