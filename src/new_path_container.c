@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Fri Oct 14 17:10:44 2016 Thomas Navennec
-** Last update Tue Oct 18 11:52:42 2016 Thomas Navennec
+** Last update Wed Oct 19 10:58:10 2016 Thomas Navennec
 */
 
 #include <time.h>
@@ -33,19 +33,6 @@ int	check_nums(const char *input)
       input++;
     }
   return 0;
-}
-
-char	*concat_and_alloc(const char * const s1,
-			  const char * const s2)
-{
-  char	*res;
-
-  if (!(res = malloc(sizeof(char) * (strlen(s1) + strlen(s2) + 1))))
-    return NULL;
-  res[0] = 0;
-  strcat(res, s1);
-  strcat(res, s2);
-  return res;
 }
 
 /*
@@ -120,7 +107,7 @@ char	*get_container_size()
 ** Returns 0 if a container was created succesfully
 */
 int	new_pam_container(char * path,
-			  const char * uname,
+			  __attribute__((unused))const char * uname,
 			  int flags)
 {
   char *line;

@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Fri Oct 14 15:24:56 2016 Thomas Navennec
-** Last update Tue Oct 18 10:26:31 2016 Thomas Navennec
+** Last update Wed Oct 19 10:58:04 2016 Thomas Navennec
 */
 
 #include <sys/types.h>
@@ -98,8 +98,26 @@ char	*get_crypt_name(const char *uname, const int flags)
   char	*name;
   const size_t	len = strlen(uname) + strlen(NAME_STR);
   name = malloc(sizeof(char) * (len + 1));
+  if (!name)
+    {
+      err_msg(ERR_MALLOC, flags);
+      return NULL;
+    }
   name[0] = 0;
   strcat(name, NAME_STR);
   strcat(name, uname);
   return name;
+}
+
+char	*concat_and_alloc(const char * const s1,
+			  const char * const s2)
+{
+  char	*res;
+
+  if (!(res = malloc(sizeof(char) * (strlen(s1) + strlen(s2) + 1))))
+    return NULL;
+  res[0] = 0;
+  strcat(res, s1);
+  strcat(res, s2);
+  return res;
 }
