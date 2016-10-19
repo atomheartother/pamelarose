@@ -65,7 +65,7 @@ int	check_uname(const char *uname)
 {
   struct passwd *pw = getpwnam(uname);
 
-  return pw == (struct passwd *)0;
+  return (pw == (struct passwd *)0 || !pw->pw_uid);
 }
 
 int	main(int ac, const char *av[])

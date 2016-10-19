@@ -26,7 +26,9 @@ LIBS += -lcryptsetup -lpam
 
 SRCDIR = ./src/
 OBJDIR = ./obj/
+
 DESTDIR = /lib/x86_64-linux-gnu/security/
+DESTDIRBIN = /sbin/
 
 SRC =	$(SRCDIR)pam_elarose.c		\
 	$(SRCDIR)utils.c		\
@@ -52,6 +54,7 @@ all: $(NAME) $(NAMEBIN)
 # Installs the binary in the right directory FOR DEBIAN ONLY!
 install: all
 	@test -d $(DESTDIR) || mkdir -p $(DESTDIR) && cp $(NAME) $(DESTDIR)
+	@cp $(NAMEBIN) $(DESTDIRBIN)
 
 $(NAME): $(OBJ)
 	$(CC) -shared $(LIBS) -o $@ $(OBJ) $(CFLAGS)

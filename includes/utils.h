@@ -24,7 +24,7 @@
 # define NAME_STR	"PR_"
 # define PAM_USAGE	"pamelaRose (username) (open|close|create|delete)"
 # define ROOTREQ	"You need to be root to manage containers"
-# define PAM_BADUNAME	"This username is invalid"
+# define PAM_BADUNAME	"This user doesn't exist or is root"
 # define PAM_DELETED	"Container deleted"
 
 # define MKFS_FLAG      0x4000U
