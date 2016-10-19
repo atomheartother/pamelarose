@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Sun Oct  9 18:25:25 2016 Thomas Navennec
-** Last update Tue Oct 18 10:01:13 2016 Thomas Navennec
+** Last update Wed Oct 19 22:36:06 2016 Thomas Navennec
 */
 
 /*
@@ -58,7 +58,7 @@ int	pam_sm_open_session(pam_handle_t *pamh,
 	{
 	  res = new_pam_container(path, name, flags); /* Create and configure it */
 	  free(path);
-	  return (res != 1 ? PAM_SUCCESS : PAM_SESSION_ERR);
+	  return (!res ? PAM_SUCCESS : PAM_SESSION_ERR);
 	}
       else
 	{

@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Fri Oct 14 17:10:44 2016 Thomas Navennec
-** Last update Wed Oct 19 21:57:34 2016 Thomas Navennec
+** Last update Wed Oct 19 22:34:43 2016 Thomas Navennec
 */
 
 #include <time.h>
@@ -157,7 +157,7 @@ int	new_pam_container(char * path,
   line = get_next_line(STDIN_FILENO);
   if (!line || (strlen(line) &&
 		!strncasecmp("no", line, strlen(line))))
-    return 2;
+    return 0;
   free(line);
   /*
   ** Ask the user for the container's size

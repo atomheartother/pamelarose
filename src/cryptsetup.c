@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Mon Oct 17 13:19:04 2016 Thomas Navennec
-** Last update Tue Oct 18 10:48:20 2016 Thomas Navennec
+** Last update Wed Oct 19 22:35:29 2016 Thomas Navennec
 */
 
 #include <string.h>
@@ -93,7 +93,7 @@ int	deactivate_file(const char *path, const char * name, int flags)
   if (crypt_init(&cd, path) < 0)
     {
       err_msg(ERR_CRINIT, flags);
-      return 2;
+      return 1;
     }
   /*
   ** If the device is not activated, we won't be able to deactivate it
@@ -101,7 +101,7 @@ int	deactivate_file(const char *path, const char * name, int flags)
   if (crypt_status(cd, name) != CRYPT_ACTIVE)
     {
       crypt_free(cd);
-      return 2;
+      return 1;
     }
   int	err = 0;
   if (crypt_deactivate(cd, name) < 0)
