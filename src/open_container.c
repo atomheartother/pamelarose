@@ -5,9 +5,10 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Mon Oct 17 16:01:38 2016 Thomas Navennec
-** Last update Wed Oct 19 13:24:55 2016 Thomas Navennec
+** Last update Wed Oct 19 21:59:00 2016 Thomas Navennec
 */
 
+#include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -16,11 +17,19 @@
 #include "cryptsetup.h"
 #include "mount_operations.h"
 #include "close_container.h"
+#include "get_next_line.h"
 
 int	open_container(char *path, const char *uname, int flags)
 {
   char	*name;
   int	res = 0;
+  char *line;
+  putstring(OPEN_PROMPT);
+  line = get_next_line(STDIN_FILENO);
+  if (!line || (strlen(line) &&
+		!strncasecmp("no", line, strlen(line))))
+    return 0;
+  free(line);
 
   if (!(name = get_crypt_name(uname, flags)))
     return 1;

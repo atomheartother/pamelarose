@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Fri Oct 14 17:10:44 2016 Thomas Navennec
-** Last update Wed Oct 19 10:58:10 2016 Thomas Navennec
+** Last update Wed Oct 19 21:57:34 2016 Thomas Navennec
 */
 
 #include <time.h>
@@ -148,12 +148,12 @@ int	new_pam_container(char * path,
       err_msg(ERR_BADCREA, flags);
       return 1;
     }
-  char *line;
   putstring(NEWPAM_WELCOME);
   putstring(NEWPAM_PROMPT);
   /*
   ** Ask the user if they want to create a container
   */
+  char *line;
   line = get_next_line(STDIN_FILENO);
   if (!line || (strlen(line) &&
 		!strncasecmp("no", line, strlen(line))))
