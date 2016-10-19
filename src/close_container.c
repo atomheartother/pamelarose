@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Mon Oct 17 18:34:45 2016 Thomas Navennec
-** Last update Wed Oct 19 13:24:48 2016 Thomas Navennec
+** Last update Wed Oct 19 13:33:47 2016 Thomas Navennec
 */
 
 #include <stdlib.h>
@@ -20,9 +20,9 @@ int	close_container(char * path, const char *uname, int flags)
 
   if (!(name = get_crypt_name(uname, flags)))
     return 1;
-  res = deactivate_file(path, name, flags) > 0;
+  res = pam_umount(uname, name, flags);
   if (!res)
-    res = pam_umount(uname, name, flags);
+    res = deactivate_file(path, name, flags) > 0;
   free(name);
   return res;
 }
