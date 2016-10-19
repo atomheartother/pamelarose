@@ -32,8 +32,9 @@
 # define CR_ARG2	"luksFormat"
 
 # define ERR_CREAT	"Failed to create container"
+# define ERR_BADCREA	"A container already exists for this user!"
 # define BAD_WRITE	"Write to container failed"
-
+# define PER_STR	"\rCreating file: "
 /*
 ** Tries the user gets to enter the size of his container
 */

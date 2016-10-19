@@ -16,11 +16,12 @@
 int	close_container(char * path, const char *uname, int flags)
 {
   char	*name;
-  int	res;
+  int	res = 0;
 
   if (!(name = get_crypt_name(uname, flags)))
     return 1;
-  res = pam_umount(uname, name, flags);
+  if (flags & UMOUNT_FLAG)
+    res = pam_umount(uname, name, flags);
   if (!res)
     res = deactivate_file(path, name, flags) > 0;
   free(name);

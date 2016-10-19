@@ -8,17 +8,19 @@
 ** Last update Wed Oct 19 13:24:55 2016 Thomas Navennec
 */
 
+#include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include "open_container.h"
 #include "utils.h"
 #include "cryptsetup.h"
 #include "mount_operations.h"
+#include "close_container.h"
 
 int	open_container(char *path, const char *uname, int flags)
 {
   char	*name;
-  int	res;
+  int	res = 0;
 
   if (!(name = get_crypt_name(uname, flags)))
     return 1;
@@ -27,7 +29,21 @@ int	open_container(char *path, const char *uname, int flags)
   if (res)
     putstring(PAM_NOOPEN);
   else
-    res = pam_mount(uname, name, flags);
+    {
+      /*
+      ** If we just created the container,
+      ** we need to create the FS
+      */
+      if (flags & MKFS_FLAG)
+	res = pam_mkfs(name, flags);
+      if (res) /* If we failed to create the FS we need to deactivate and delete */
+	{
+	  close_container(path, uname, flags);
+	  unlink(path);
+	}
+      else
+	res = pam_mount(uname, name, flags);
+    }
   free(name);
   return res;
 }

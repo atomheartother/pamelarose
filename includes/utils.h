@@ -16,19 +16,25 @@
 # define FILE_NAME	"pamelaRose"
 
 # define ERR_MALLOC	"Malloc failed"
-# define ERR_PWD	"Could not obtain pwd data"
 # define ERR_STAT	"stat failed on device"
 # define ERR_EXECV	"Could not execute command"
 # define ERR_CRYPT	"cryptsetup execution failed, removing file"
 # define ERR_UNLINK	"Failed to delete file"
 
 # define NAME_STR	"PR_"
-# define PAM_USAGE	"pamelaRose [open|close|create|delete]"
+# define PAM_USAGE	"pamelaRose (username) (open|close|create|delete)"
+# define ROOTREQ	"You need to be root to manage containers"
+# define PAM_BADUNAME	"This username is invalid"
+# define PAM_DELETED	"Container deleted"
+
+# define MKFS_FLAG      0x4000U
+# define UMOUNT_FLAG	0x2000U
+# define ERRNO_FLAG	0x1000U
 
 char	*get_crypt_path(const char *name, const int flags);
 char	*get_crypt_name(const char *uname, const int flags);
 void	err_msg(const char * const msg, const int flags);
-int	execute_file(char *exec, int argc, char *args[], int flags);
+int	execute_file(char *exec, int argc, char *args[], const int flags);
 void	putstring(const char * const s);
 char	*concat_and_alloc(const char *s1, const char *s2);
 

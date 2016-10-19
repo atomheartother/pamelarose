@@ -22,23 +22,23 @@ int	del_container(char *path, const char *uname, int flags)
 {
   int	res = 0;
 
-  res = close_container(path, uname, 0x8000U);
+  res = close_container(path, uname, 0x8000U + UMOUNT_FLAG);
   if (unlink(path))
     {
       err_msg(ERR_UNLINK, flags);
       res = 1;
     }
+  else
+    putstring(PAM_DELETED);
   return res;
 }
 
-int	handle_command(const char *str)
+int	handle_command(const char *str, const char *uname)
 {
-  struct passwd	*pwd = getpwuid(getuid());
-  char	*path = get_crypt_path(pwd->pw_name, 0);
-
+  char	*path = get_crypt_path(uname, 0);
   if (!path)
     return 1;
-
+  setuid(0);
   const unsigned	count = 4;
   static int	(*func[4])(char *, const char *, int) = {
     &open_container, &close_container, &new_pam_container, &del_container};
@@ -50,7 +50,7 @@ int	handle_command(const char *str)
     {
       if (!strcmp(str, cmds[i]))
 	{
-	  ret = func[i](path, pwd->pw_name, 0);
+	  ret = func[i](path, uname, UMOUNT_FLAG);
 	  break ;
 	}
       i++;
@@ -61,11 +61,30 @@ int	handle_command(const char *str)
   return ret;
 }
 
+int	check_uname(const char *uname)
+{
+  struct passwd *pw = getpwnam(uname);
+
+  return pw == (struct passwd *)0;
+}
+
 int	main(int ac, const char *av[])
 {
-  if (ac != 2)
+  if (getuid())
+    {
+      err_msg(ROOTREQ, 0);
+      return 1;
+    }
+  if (ac != 3)
     err_msg(PAM_USAGE, 0);
   else
-    return handle_command(av[1]);
+    {
+      if (check_uname(av[1]))
+	{
+	  err_msg(PAM_BADUNAME, 0);
+	  return 1;
+	}
+      return handle_command(av[2], av[1]);
+    }
   return 1;
 }

@@ -16,6 +16,7 @@
 #include <security/pam_modules.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 #include "utils.h"
 
 void	putstring(const char * const s)
@@ -28,13 +29,15 @@ void	putstring(const char * const s)
 */
 void	err_msg(const char * const msg, const int flags)
 {
-  if (flags == PAM_SILENT)
+  if (flags & PAM_SILENT)
     return ;
   fprintf(stderr, "PAMelaRose: %s\n", msg);
+  if (flags & ERRNO_FLAG)
+    fprintf(stderr, "PaAMelaRose: %s\n", strerror(errno));
 }
 
 int	execute_file(char *exec, int argc,
-		     char *args[], int flags)
+		     char *args[], const int flags)
 {
   int		err = 0;
   int		i = 0;

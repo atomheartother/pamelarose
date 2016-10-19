@@ -38,7 +38,7 @@ int	format_file(const char *path, int flags)
     }
   int			err = 0;
   if (crypt_keyslot_add_by_volume_key(cd, CRYPT_ANY_SLOT, NULL,
-				      0, NULL, 0) < 0)
+				      0, NULL, CRYPT_ACTIVATE_READONLY) < 0)
     {
       err_msg(ERR_KSLOT, flags);
       err = 1;
@@ -76,7 +76,7 @@ int	activate_file(const char *path, const char *name, int flags)
   */
   int err = 0;
   if (crypt_activate_by_passphrase(cd, name, CRYPT_ANY_SLOT, NULL, 0,
-				   CRYPT_ACTIVATE_READONLY) < 0)
+				   0) < 0)
     {
       err_msg(ERR_CRACT, flags);
       err_msg(strerror(errno), flags);
