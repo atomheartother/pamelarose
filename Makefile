@@ -5,7 +5,7 @@
 ## Login   <navenn_t@epitech.net>
 ## 
 ## Started on  Sun Oct  9 18:28:59 2016 Thomas Navennec
-## Last update Tue Oct 18 11:12:35 2016 Thomas Navennec
+## Last update Wed Oct 19 12:04:17 2016 Thomas Navennec
 ##
 
 ARCH := $(shell getconf LONG_BIT)
@@ -35,6 +35,7 @@ SRC =	$(SRCDIR)pam_elarose.c		\
 	$(SRCDIR)cryptsetup.c		\
 	$(SRCDIR)open_container.c	\
 	$(SRCDIR)pam.c			\
+	$(SRCDIR)mount_operations.c	\
 	$(SRCDIR)close_container.c
 
 SRCBIN = $(SRCDIR)main.c
