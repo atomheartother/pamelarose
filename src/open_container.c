@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Mon Oct 17 16:01:38 2016 Thomas Navennec
-** Last update Wed Oct 19 21:59:00 2016 Thomas Navennec
+** Last update Sun Oct 23 18:35:54 2016 Thomas Navennec
 */
 
 #include <string.h>
@@ -24,6 +24,10 @@ int	open_container(char *path, const char *uname, int flags)
   char	*name;
   int	res = 0;
   char *line;
+
+  /*
+  ** Ask the user if they want to open the container
+  */
   putstring(OPEN_PROMPT);
   line = get_next_line(STDIN_FILENO);
   if (!line || (strlen(line) &&
@@ -31,8 +35,15 @@ int	open_container(char *path, const char *uname, int flags)
     return 0;
   free(line);
 
+  /*
+  ** Get device name
+  */
   if (!(name = get_crypt_name(uname, flags)))
     return 1;
+
+  /*
+  ** luksOpen
+  */
   printf(PAM_OPEN, path);
   res = activate_file(path, name, flags); /* LUKSopen failed */
   if (res)
@@ -41,7 +52,7 @@ int	open_container(char *path, const char *uname, int flags)
     {
       /*
       ** If we just created the container,
-      ** we need to create the FS
+      ** we need to create the FileSystem
       */
       if (flags & MKFS_FLAG)
 	res = pam_mkfs(name, flags);
@@ -50,7 +61,7 @@ int	open_container(char *path, const char *uname, int flags)
 	  close_container(path, uname, flags);
 	  unlink(path);
 	}
-      else
+      else /* If all went well, we mount */
 	res = pam_mount(uname, name, flags);
     }
   free(name);

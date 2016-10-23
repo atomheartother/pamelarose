@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Tue Oct 18 08:54:43 2016 Thomas Navennec
-** Last update Tue Oct 18 10:57:46 2016 Thomas Navennec
+** Last update Sun Oct 23 18:38:27 2016 Thomas Navennec
 */
 
 #include <sys/types.h>
@@ -17,6 +17,10 @@
 #include "open_container.h"
 #include "close_container.h"
 #include "new_pam_container.h"
+
+/*
+** The code here lets root user manage containers
+*/
 
 int	del_container(char *path, const char *uname, int flags)
 {

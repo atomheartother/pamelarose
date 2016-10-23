@@ -5,7 +5,7 @@
 ** Login   <navenn_t@epitech.net>
 ** 
 ** Started on  Mon Oct 17 13:19:04 2016 Thomas Navennec
-** Last update Wed Oct 19 22:35:29 2016 Thomas Navennec
+** Last update Sun Oct 23 18:36:40 2016 Thomas Navennec
 */
 
 #include <string.h>
@@ -15,6 +15,10 @@
 #include "utils.h"
 #include "get_next_line.h"
 
+
+/*
+** Create a LUKS-formatted file
+*/
 int	format_file(const char *path, int flags)
 {
   struct crypt_device	*cd;
@@ -47,6 +51,9 @@ int	format_file(const char *path, int flags)
   return err;
 }
 
+/*
+** luksOpen
+*/
 int	activate_file(const char *path, const char *name, int flags)
 {
   struct crypt_device	*cd;
@@ -86,6 +93,9 @@ int	activate_file(const char *path, const char *name, int flags)
   return err;
 }
 
+/*
+** luksClose
+*/
 int	deactivate_file(const char *path, const char * name, int flags)
 {
   struct crypt_device	*cd;
