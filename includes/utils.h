@@ -19,13 +19,11 @@
 # define ERR_STAT	"stat failed on device"
 # define ERR_EXECV	"Could not execute command"
 # define ERR_CRYPT	"cryptsetup execution failed, removing file"
-# define ERR_UNLINK	"Failed to delete file"
 
 # define NAME_STR	"PR_"
 # define PAM_USAGE	"pamelaRose (username) (open|close|create|delete)"
 # define ROOTREQ	"You need to be root to manage containers"
 # define PAM_BADUNAME	"This user doesn't exist or is root"
-# define PAM_DELETED	"Container deleted\n"
 
 # define MKFS_FLAG      0x4000U
 # define UMOUNT_FLAG	0x2000U

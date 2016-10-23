@@ -1,38 +1,23 @@
+#include <unistd.h>
 #include <sys/types.h>
 #include <pwd.h>
-#include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
 #include "utils.h"
 #include "open_container.h"
 #include "close_container.h"
 #include "new_pam_container.h"
+#include "del_container.h"
 
 /*
 ** The code here lets root user manage containers
 */
-
-int	del_container(char *path, const char *uname, int flags)
-{
-  int	res = 0;
-
-  res = close_container(path, uname, flags + 0x8000U);
-  if (unlink(path))
-    {
-      err_msg(ERR_UNLINK, flags);
-      res = 1;
-    }
-  else
-    putstring(PAM_DELETED);
-  return res;
-}
 
 int	handle_command(const char *str, const char *uname)
 {
   char	*path = get_crypt_path(uname, 0);
   if (!path)
     return 1;
-  setuid(0);
   const unsigned	count = 4;
   static int	(*func[4])(char *, const char *, int) = {
     &open_container, &close_container, &new_pam_container, &del_container};
@@ -44,7 +29,7 @@ int	handle_command(const char *str, const char *uname)
     {
       if (!strcmp(str, cmds[i]))
 	{
-	  ret = func[i](path, uname, UMOUNT_FLAG + OPEN_FLAG);
+	  ret = func[i](path, uname, UMOUNT_FLAG);
 	  break ;
 	}
       i++;

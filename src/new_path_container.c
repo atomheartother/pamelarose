@@ -11,6 +11,7 @@
 #include "get_next_line.h"
 #include "cryptsetup.h"
 #include "open_container.h"
+#include "del_container.h"
 
 int	check_nums(const char *input)
 {
@@ -179,5 +180,13 @@ int	new_pam_container(char * path,
   ** Unset OPEN_FLAG since the open HAS to happen!
   */
   flags &= ~OPEN_FLAG;
-  return open_container(path, uname, flags + MKFS_FLAG);
+  flags |= UMOUNT_FLAG;
+  flags |= MKFS_FLAG;
+  /*
+  ** The first open creates the filesystem,
+  ** if it fails we NEED to delete the container!
+  */
+  if ((err = open_container(path, uname, flags)))
+    del_container(path, uname, flags);
+  return err;
 }

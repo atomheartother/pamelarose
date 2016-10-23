@@ -14,8 +14,7 @@
 # define MOUNT_POINT	"/home/"
 # define MAPPER		"/dev/mapper/"
 # define FSYSTEM	"ext4"
-# define MOUNT_SEP	"/"
-
+# define MOUNT_DIR	"/pamelaRose"
 # define MSG_MKFS	"Creating ext4 filesystem..."
 # define ERR_MOUNT	"Mount failed"
 # define ERR_UMOUNT	"Unmount failed"

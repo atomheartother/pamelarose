@@ -50,7 +50,8 @@ int	create_dir(const char *dest,
 /*
 ** Mounts container in appropriate folder
 */
-int	pam_mount(const char *uname, const char *devicename,
+int	pam_mount(const char *uname,
+		  const char *devicename,
 		  const int flags)
 {
   char	src[PATH_MAX] = {0};
@@ -60,7 +61,7 @@ int	pam_mount(const char *uname, const char *devicename,
   strcat(src, devicename);
   strcat(dest, MOUNT_POINT);
   strcat(dest, uname);
-  strcat(dest, "/pamelaRose");
+  strcat(dest, MOUNT_DIR);
   
   if (create_dir(dest, flags))
     return 1;
@@ -101,7 +102,7 @@ int		pam_umount(const char *uname,
 
   strcat(target, MOUNT_POINT);
   strcat(target, uname);
-  strcat(target, "/pamelaRose");
+  strcat(target, MOUNT_DIR);
   printf("pamelaRose: unmounting %s\n", target);
   if (umount2(target, MNT_FORCE) == -1)
     {

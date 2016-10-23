@@ -38,6 +38,7 @@ SRC =	$(SRCDIR)pam_elarose.c		\
 	$(SRCDIR)open_container.c	\
 	$(SRCDIR)pam.c			\
 	$(SRCDIR)mount_operations.c	\
+	$(SRCDIR)del_container.c	\
 	$(SRCDIR)close_container.c
 
 SRCBIN = $(SRCDIR)main.c

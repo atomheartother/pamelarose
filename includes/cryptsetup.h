@@ -25,5 +25,6 @@
 int	format_file(const char * file, int flags);
 int	activate_file(const char * file, const char * name, int flags);
 int	deactivate_file(const char *path, const char * name, int flags);
+int	is_active(const char *path, const char * name, int flags);
 
 #endif

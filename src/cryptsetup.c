@@ -83,6 +83,35 @@ int	activate_file(const char *path, const char *name, int flags)
 }
 
 /*
+** Check if device is active
+** returns  0 if it is active
+** 1 if it is inactive
+** 2 if an error occured
+*/
+int	is_active(const char *path, const char *name, int flags)
+{
+ struct crypt_device	*cd;
+ int			res = 0;
+
+  if (crypt_init(&cd, path) < 0)
+    {
+      err_msg(ERR_CRINIT, flags);
+      return 2;
+    }
+  if (crypt_load(cd, CRYPT_LUKS1, NULL) < 0)
+    {
+      crypt_free(cd);
+      err_msg(ERR_CRLOAD, flags);
+      return 2;
+    }
+  int inf = crypt_status(cd, name);
+  if (inf == CRYPT_INACTIVE || inf == CRYPT_INVALID)
+    res = 1;
+  crypt_free(cd);
+  return res;
+}
+
+/*
 ** luksClose
 */
 int	deactivate_file(const char *path, const char * name, int flags)
@@ -92,6 +121,12 @@ int	deactivate_file(const char *path, const char * name, int flags)
   if (crypt_init(&cd, path) < 0)
     {
       err_msg(ERR_CRINIT, flags);
+      return 1;
+    }
+  if (crypt_load(cd, CRYPT_LUKS1, NULL) < 0)
+    {
+      crypt_free(cd);
+      err_msg(ERR_CRLOAD, flags);
       return 1;
     }
   /*

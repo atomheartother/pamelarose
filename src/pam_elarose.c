@@ -58,7 +58,10 @@ int	pam_sm_open_session(pam_handle_t *pamh,
 	}
     }
   else
-    res = open_container(path, name, flags + OPEN_FLAG);
+    {
+      flags |= OPEN_FLAG;
+      res = open_container(path, name, flags);
+    }
   free(path);
   return (res ? PAM_SESSION_ERR : PAM_SUCCESS);
 }
@@ -86,7 +89,8 @@ int pam_sm_close_session(pam_handle_t *pamh,
       free(path);
       return PAM_SESSION_ERR;
     }
-  res = close_container(path, name, flags + UMOUNT_FLAG);
+  flags |= UMOUNT_FLAG;
+  res = close_container(path, name, flags);
   free(path);
   return (res ? PAM_SESSION_ERR : PAM_SUCCESS);
 }

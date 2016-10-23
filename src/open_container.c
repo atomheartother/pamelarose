@@ -27,11 +27,21 @@ int	open_container(char *path, const char *uname, int flags)
 	return 0;
       free(line);
     }
+
   /*
   ** Get device name
   */
   if (!(name = get_crypt_name(uname, flags)))
     return 1;
+
+  /*
+  ** Check that the container isn't already activated & mounted
+  */
+  if (!is_active(path, name, flags))
+    {
+      free(name);
+      return 0;
+    }
 
   /*
   ** luksOpen
@@ -48,12 +58,7 @@ int	open_container(char *path, const char *uname, int flags)
       */
       if (flags & MKFS_FLAG)
 	res = pam_mkfs(name, flags);
-      if (res) /* If we failed to create the FS we need to deactivate and delete */
-	{
-	  close_container(path, uname, flags);
-	  unlink(path);
-	}
-      else /* If all went well, we mount */
+      if (!res) /* If all went well, we mount */
 	res = pam_mount(uname, name, flags);
     }
   free(name);

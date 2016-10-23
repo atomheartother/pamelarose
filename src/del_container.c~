@@ -1,0 +1,18 @@
+#include "close_container.h"
+#include "utils.h"
+
+int	del_container(char *path, const char *uname, int flags)
+{
+  int	res = 0;
+
+  flags |= 0x8000U; /* PAM_SILENT */
+  close_container(path, uname, flags);
+  if (unlink(path))
+    {
+      err_msg(ERR_UNLINK, flags);
+      res = 1;
+    }
+  else
+    putstring(PAM_DELETED);
+  return res;
+}
