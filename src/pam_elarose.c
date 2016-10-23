@@ -58,7 +58,7 @@ int	pam_sm_open_session(pam_handle_t *pamh,
 	}
     }
   else
-    res = open_container(path, name, flags);
+    res = open_container(path, name, flags + OPEN_FLAG);
   free(path);
   return (res ? PAM_SESSION_ERR : PAM_SUCCESS);
 }

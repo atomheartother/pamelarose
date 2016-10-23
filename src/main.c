@@ -16,7 +16,7 @@ int	del_container(char *path, const char *uname, int flags)
 {
   int	res = 0;
 
-  res = close_container(path, uname, 0x8000U + UMOUNT_FLAG);
+  res = close_container(path, uname, flags + 0x8000U);
   if (unlink(path))
     {
       err_msg(ERR_UNLINK, flags);
@@ -44,7 +44,7 @@ int	handle_command(const char *str, const char *uname)
     {
       if (!strcmp(str, cmds[i]))
 	{
-	  ret = func[i](path, uname, UMOUNT_FLAG);
+	  ret = func[i](path, uname, UMOUNT_FLAG + OPEN_FLAG);
 	  break ;
 	}
       i++;

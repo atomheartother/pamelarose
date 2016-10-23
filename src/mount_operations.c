@@ -102,7 +102,7 @@ int		pam_umount(const char *uname,
   strcat(target, MOUNT_POINT);
   strcat(target, uname);
   strcat(target, "/pamelaRose");
-  printf("pamelaRose: Unmounting %s\n", target);
+  printf("pamelaRose: unmounting %s\n", target);
   if (umount2(target, MNT_FORCE) == -1)
     {
       err_msg(ERR_UMOUNT, flags + ERRNO_FLAG);

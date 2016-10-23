@@ -176,6 +176,8 @@ int	new_pam_container(char * path,
     }
   /*
   ** We proceed to first open, which also performs MKFS
+  ** Unset OPEN_FLAG since the open HAS to happen!
   */
+  flags &= ~OPEN_FLAG;
   return open_container(path, uname, flags + MKFS_FLAG);
 }

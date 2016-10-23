@@ -18,13 +18,15 @@ int	open_container(char *path, const char *uname, int flags)
   /*
   ** Ask the user if they want to open the container
   */
-  putstring(OPEN_PROMPT);
-  line = get_next_line(STDIN_FILENO);
-  if (!line || (strlen(line) &&
-		!strncasecmp("no", line, strlen(line))))
-    return 0;
-  free(line);
-
+  if (flags & OPEN_FLAG)
+    {
+      putstring(OPEN_PROMPT);
+      line = get_next_line(STDIN_FILENO);
+      if (!line || (strlen(line) &&
+		    !strncasecmp("no", line, strlen(line))))
+	return 0;
+      free(line);
+    }
   /*
   ** Get device name
   */
