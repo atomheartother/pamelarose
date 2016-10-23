@@ -1,13 +1,3 @@
-/*
-** utils.c for  in /home/navenn_t/Programmation/crypto/pamelarose
-** 
-** Made by Thomas Navennec
-** Login   <navenn_t@epitech.net>
-** 
-** Started on  Fri Oct 14 15:24:56 2016 Thomas Navennec
-** Last update Wed Oct 19 10:58:04 2016 Thomas Navennec
-*/
-
 #include <sys/types.h>
 #include <pwd.h>
 #include <limits.h>
@@ -19,13 +9,17 @@
 #include <errno.h>
 #include "utils.h"
 
+/*
+** Basic write() wrapper
+*/
 void	putstring(const char * const s)
 {
   write(STDOUT_FILENO, s, strlen(s));
 }
 
 /*
-** Generic error msg function
+** Generic error msg function,
+** can be told to display errno
 */
 void	err_msg(const char * const msg, const int flags)
 {
@@ -36,6 +30,9 @@ void	err_msg(const char * const msg, const int flags)
     fprintf(stderr, "PaAMelaRose: %s\n", strerror(errno));
 }
 
+/*
+** Generic subprocess execution function
+*/
 int	execute_file(char *exec, int argc,
 		     char *args[], const int flags)
 {
@@ -60,7 +57,7 @@ int	execute_file(char *exec, int argc,
 	}
     }
   i = 0;
-  while (i < 5)
+  while (i < argc)
     {
       if (args[i])
 	free(args[i]);
@@ -112,6 +109,9 @@ char	*get_crypt_name(const char *uname, const int flags)
   return name;
 }
 
+/*
+** Generic concat function
+*/
 char	*concat_and_alloc(const char * const s1,
 			  const char * const s2)
 {

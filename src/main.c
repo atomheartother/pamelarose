@@ -1,13 +1,3 @@
-/*
-** main.c for  in /home/navenn_t/Programmation/crypto/pamelarose
-** 
-** Made by Thomas Navennec
-** Login   <navenn_t@epitech.net>
-** 
-** Started on  Tue Oct 18 08:54:43 2016 Thomas Navennec
-** Last update Sun Oct 23 18:38:27 2016 Thomas Navennec
-*/
-
 #include <sys/types.h>
 #include <pwd.h>
 #include <unistd.h>

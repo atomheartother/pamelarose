@@ -1,18 +1,12 @@
-/*
-** close_container.c for  in /home/navenn_t/Programmation/crypto/pamelarose
-** 
-** Made by Thomas Navennec
-** Login   <navenn_t@epitech.net>
-** 
-** Started on  Mon Oct 17 18:34:45 2016 Thomas Navennec
-** Last update Wed Oct 19 13:33:47 2016 Thomas Navennec
-*/
-
 #include <stdlib.h>
 #include "utils.h"
 #include "cryptsetup.h"
 #include "mount_operations.h"
 
+/*
+** Closes the container
+** Unmounts it before closing if asked to
+*/
 int	close_container(char * path, const char *uname, int flags)
 {
   char	*name;

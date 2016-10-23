@@ -1,20 +1,9 @@
-/*
-** cryptsetup.c for  in /home/navenn_t/Programmation/crypto/pamelarose/src
-** 
-** Made by Thomas Navennec
-** Login   <navenn_t@epitech.net>
-** 
-** Started on  Mon Oct 17 13:19:04 2016 Thomas Navennec
-** Last update Sun Oct 23 18:36:40 2016 Thomas Navennec
-*/
-
 #include <string.h>
 #include <errno.h>
 #include <libcryptsetup.h>
 #include "cryptsetup.h"
 #include "utils.h"
 #include "get_next_line.h"
-
 
 /*
 ** Create a LUKS-formatted file

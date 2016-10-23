@@ -1,18 +1,7 @@
-/*
-** new_path_container.c for  in /home/navenn_t/Programmation/crypto/pamelarose
-** 
-** Made by Thomas Navennec
-** Login   <navenn_t@epitech.net>
-** 
-** Started on  Fri Oct 14 17:10:44 2016 Thomas Navennec
-** Last update Wed Oct 19 22:34:43 2016 Thomas Navennec
-*/
-
 #include <time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include <sys/wait.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
@@ -36,6 +25,9 @@ int	check_nums(const char *input)
   return 0;
 }
 
+/*
+** Writes percentage progress
+*/
 void	write_percentage(int p)
 {
   char	percent[strlen(PER_STR) + 5];
@@ -107,6 +99,9 @@ int	create_file(char * path,
   return 0;
 }
 
+/*
+** Ask user for the size of the container
+*/
 char	*get_container_size()
 {
   int	loop = NEWPAM_MAX_TRIES;
@@ -131,9 +126,9 @@ char	*get_container_size()
 }
 
 /*
-** Returns 2 if the user did not want to create a container
 ** Returns 1 if an error occured
-** Returns 0 if a container was created succesfully
+** Returns 0 if a container was created succesfully, or if the user
+** did not want a container to be created
 */
 int	new_pam_container(char * path,
 			  __attribute__((unused))const char * uname,

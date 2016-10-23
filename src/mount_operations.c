@@ -1,13 +1,3 @@
-/*
-** mount_operations.c for  in /home/navenn_t/Programmation/crypto/pamelarose
-** 
-** Made by Thomas Navennec
-** Login   <navenn_t@epitech.net>
-** 
-** Started on  Wed Oct 19 10:36:18 2016 Thomas Navennec
-** Last update Wed Oct 19 13:20:25 2016 Thomas Navennec
-*/
-
 #include <errno.h>
 #include <string.h>
 #include <pwd.h>
@@ -22,6 +12,9 @@
 #include "utils.h"
 #include "mount_operations.h"
 
+/*
+** Creates a directory
+*/
 int	create_dir(const char *dest,
 		   const int flags)
 {
@@ -54,6 +47,9 @@ int	create_dir(const char *dest,
   return 0;
 }
 
+/*
+** Mounts container in appropriate folder
+*/
 int	pam_mount(const char *uname, const char *devicename,
 		  const int flags)
 {
@@ -73,6 +69,7 @@ int	pam_mount(const char *uname, const char *devicename,
       err_msg(ERR_MOUNT, flags + ERRNO_FLAG);
       return 1;
     }
+
   /*
   ** We get user info and give him rights over the folder
   */
@@ -93,6 +90,9 @@ int	pam_mount(const char *uname, const char *devicename,
   return err;
 }
 
+/*
+** Unmounts
+*/
 int		pam_umount(const char *uname,
 			   __attribute__((unused))const char *devicename,
 			   const int flags)
@@ -111,6 +111,9 @@ int		pam_umount(const char *uname,
   return 0;
 }
 
+/*
+** Creates filesystem
+*/
 int	do_mkfs(const char*name,
 		const int flags)
 {
@@ -127,6 +130,9 @@ int	do_mkfs(const char*name,
 		      flags);
 }
 
+/*
+** No C function to do it, need to use subprocess
+*/
 int	pam_mkfs(const char *name,
 		 const int flags)
 {

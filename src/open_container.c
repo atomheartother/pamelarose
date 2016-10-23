@@ -1,13 +1,3 @@
-/*
-** open_container.c for  in /home/navenn_t/Programmation/crypto/pamelarose
-** 
-** Made by Thomas Navennec
-** Login   <navenn_t@epitech.net>
-** 
-** Started on  Mon Oct 17 16:01:38 2016 Thomas Navennec
-** Last update Sun Oct 23 18:35:54 2016 Thomas Navennec
-*/
-
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
